@@ -11,7 +11,7 @@ import {
 /**
  * Receives project inquiries from the contact form.
  *
- * Delivery options (set in your Vercel project's environment variables):
+ * Delivery options (set in Netlify → Project configuration → Environment variables):
  * 1. CONTACT_WEBHOOK_URL — forward inquiries as JSON to a webhook, e.g. an
  *    n8n Webhook node that routes them to your CRM, inbox or Slack.
  *    Optional CONTACT_WEBHOOK_SECRET is sent as the `x-webhook-secret` header.

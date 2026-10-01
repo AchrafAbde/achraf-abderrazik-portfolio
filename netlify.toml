@@ -1,0 +1,9 @@
+# Netlify settings. Values here override the same settings in the Netlify UI.
+# Build command and publish directory are left to Netlify's Next.js detection.
+
+[build.environment]
+  # The site's public address, used for canonical URLs, hreflang, the sitemap,
+  # robots.txt, share images and structured data (src/lib/site-url.ts).
+  # Next.js reads it at build time: a change takes effect on the next deploy.
+  # Update it here if the site moves to a custom domain.
+  NEXT_PUBLIC_SITE_URL = "https://achraf-abderrazik.netlify.app"

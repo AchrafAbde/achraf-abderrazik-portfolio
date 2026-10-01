@@ -307,14 +307,25 @@ Then open `/` (it should land on `/en`), `/fr`, a case study in both
 languages, switch with **EN · FR**, and an unknown address such as
 `/fr/nimporte-quoi` (the French 404).
 
-**Vercel:** push to the GitHub repository connected to Vercel. Every push to
-the main branch deploys. Environment variables (see `.env.example`):
+**Publishing (Netlify):** the site deploys from GitHub. Commit, then push to
+`main` (`github.com/AchrafAbde/achraf-abderrazik-portfolio`): Netlify builds and
+publishes https://achraf-abderrazik.netlify.app automatically. Follow the build
+in Netlify → Deploys.
 
-| Variable                 | Purpose                                                   |
-| ------------------------ | --------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`   | Your domain, once you have one (`https://…`). Used for canonical URLs, `hreflang`, the sitemap and share links. Without it, Vercel's production URL is used. |
-| `CONTACT_WEBHOOK_URL`, `CONTACT_WEBHOOK_SECRET` | Send inquiries to a webhook (e.g. n8n) |
-| `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | Or send them by email with Resend |
+Environment variables (all listed, without values, in `.env.example`):
+
+| Variable | Where it's set | Purpose |
+| -------- | -------------- | ------- |
+| `NEXT_PUBLIC_SITE_URL` | `netlify.toml` | The public production URL, `https://achraf-abderrazik.netlify.app`. Used for canonical URLs, `hreflang`, the sitemap, robots.txt and share links. Read at build time, so a change needs a new deploy. Locally, leave it unset: the site falls back to `http://localhost:3000`. |
+| `RESEND_API_KEY` | Netlify → Project configuration → Environment variables | Sends inquiries by email with Resend (configured) |
+| `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Netlify environment variables (optional) | Recipient (defaults to the email in `site.ts`) and sender. The sender needs a domain verified in Resend; without one, Resend's test sender only delivers to your Resend account's email. |
+| `CONTACT_WEBHOOK_URL`, `CONTACT_WEBHOOK_SECRET` | Netlify environment variables (optional) | Send inquiries to a webhook (e.g. n8n) instead of Resend |
+
+Keys never go in the repository: `.env*` files are git-ignored, except
+`.env.example`, which has no values.
+
+**Custom domain (later):** add it in Netlify → Domain management, then change
+`NEXT_PUBLIC_SITE_URL` in `netlify.toml` to the new address and push.
 
 Without a webhook or Resend key, the form offers to send the inquiry from the
 visitor's email app instead.

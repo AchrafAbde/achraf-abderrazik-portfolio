@@ -5,7 +5,9 @@ Intelligent Systems**. Dark, editorial and technical: a cinematic portrait hero,
 five case studies with animated architecture diagrams, and a contact flow. In
 English and French, at `/en` and `/fr`.
 
-**Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion · deployed on Vercel.
+**Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion · deployed on Netlify.
+
+**Live:** https://achraf-abderrazik.netlify.app
 
 **To change any text, project or image, see [`docs/CONTENT-GUIDE.md`](docs/CONTENT-GUIDE.md).**
 
@@ -41,8 +43,9 @@ Requires Node.js 20.9 or newer.
    `src/content/projects/`; the section then becomes "My contribution".
 3. **Check the details** in `src/content/` match what you'd say in an interview.
    Every number comes from your CV or your GitHub READMEs.
-4. **Connect the contact form:** see [Contact form](#contact-form).
-5. **Custom domain:** once you have one, set `NEXT_PUBLIC_SITE_URL`.
+4. **Contact form:** `RESEND_API_KEY` is set in Netlify. Check the sender
+   limits in [Contact form](#contact-form).
+5. **Custom domain (later):** see [Deploying](#deploying).
 
 ### Your portrait
 
@@ -59,8 +62,8 @@ The photo is `public/achraf-portrait.png`, set by `portrait.src` in
 
 The file is checked at build time. Until it exists, the hero shows a monogram
 plate, plus a reminder that is only visible in `npm run dev`. After adding the
-photo, rebuild, or push to Vercel. Next.js serves the photo as resized
-AVIF/WebP automatically.
+photo, rebuild, or push to GitHub so Netlify rebuilds the site. Next.js serves
+the photo as resized AVIF/WebP automatically.
 
 The cinematic look (contrast, vignette, grain, a faint lime light in one
 corner, the technical overlay) is applied in CSS, so a new photo gets it too.
@@ -101,6 +104,8 @@ src/
 docs/CONTENT-GUIDE.md           Adding projects, translations, images, contact details, deploying
 docs/DESIGN-SYSTEM.md           Tokens, components and usage rules
 next.config.ts                  Redirects (/ → /en, old links) and security headers
+netlify.toml                    Netlify build environment: the public site URL
+.env.example                    Every environment variable, without values
 ```
 
 Every page is generated at build time from the content files, so adding a
@@ -186,10 +191,12 @@ HTML.
 
 The form posts to `/api/contact`, which validates the input (same rules as the
 browser, see `src/lib/contact.ts`), drops spam caught by a honeypot field, and
-delivers the inquiry in one of two ways:
+delivers the inquiry in one of two ways. Both are configured in Netlify →
+Project configuration → Environment variables, never in the repository.
 
 **Option 1 — Webhook (e.g. n8n).** Set `CONTACT_WEBHOOK_URL` (and optionally
-`CONTACT_WEBHOOK_SECRET`). Each inquiry is POSTed as JSON:
+`CONTACT_WEBHOOK_SECRET`). When it's set, it's used instead of Resend. Each
+inquiry is POSTed as JSON:
 
 ```json
 {
@@ -212,9 +219,17 @@ In n8n, add a **Webhook** node (POST, respond immediately). Check the
 `x-webhook-secret` header with an **IF** node, then route the lead to Gmail, a
 CRM, Slack or a Google Sheet.
 
-**Option 2 — Email with Resend.** Set `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`
-(a sender on a domain verified in Resend) and optionally `CONTACT_TO_EMAIL`.
-The subject ends with the visitor's language, e.g. `(FR)`.
+**Option 2 — Email with Resend (the current setup).** `RESEND_API_KEY` is set
+in Netlify's environment variables. Inquiries go to `CONTACT_TO_EMAIL`, or to
+the email in `site.ts` when it isn't set, and the subject ends with the
+visitor's language, e.g. `(FR)`.
+
+`CONTACT_FROM_EMAIL` must be a sender on a domain verified in Resend. Until you
+have one, leave it unset: inquiries are then sent from Resend's test address,
+`onboarding@resend.dev`, which only delivers to the email address of your
+Resend account. Make sure the recipient is that address. A `netlify.app`
+address can't be verified in Resend (you don't control its DNS); once you have
+a custom domain, verify it in Resend and set `CONTACT_FROM_EMAIL`.
 
 If neither is configured, the endpoint answers `503`. The form then offers a
 one-click "Send by email instead" fallback, written in the visitor's language,
@@ -224,17 +239,33 @@ See `.env.example` for every variable.
 
 ---
 
-## Deploying to Vercel
+## Deploying
 
-1. Push this folder to a GitHub repository (including `public/achraf-portrait.png`).
-2. In Vercel, choose **Add New → Project** and import the repository. The defaults
-   (framework Next.js, build command `next build`) are correct.
-3. Add the environment variables from `.env.example` that you use.
-4. Deploy. Then add your custom domain under **Settings → Domains** and set
-   `NEXT_PUBLIC_SITE_URL` to it.
+The site is hosted on **Netlify** and deploys from GitHub:
 
-Without `NEXT_PUBLIC_SITE_URL`, canonical URLs, the sitemap, social cards and
-structured data use Vercel's production URL automatically.
+- **Source:** `github.com/AchrafAbde/achraf-abderrazik-portfolio`, branch `main`.
+- **Every push to `main`** builds and publishes the production site at
+  https://achraf-abderrazik.netlify.app. Follow builds in Netlify → Deploys.
+  Netlify detects Next.js and builds it with its Next.js runtime; there are no
+  build settings to maintain.
+- **`NEXT_PUBLIC_SITE_URL`** is the public production URL, set in
+  `netlify.toml` to `https://achraf-abderrazik.netlify.app`. It's used for
+  canonical URLs, `hreflang`, the sitemap, robots.txt, share images and
+  structured data. Next.js reads it at build time, so a change takes effect on
+  the next deploy. Values in `netlify.toml` override the same settings in the
+  Netlify UI.
+- **Secrets** (`RESEND_API_KEY`, and the optional `CONTACT_*` variables) are
+  set in Netlify → Project configuration → Environment variables, never in the
+  repository. `.env.example` lists every variable, without values.
+
+**Custom domain (later):** add it in Netlify → Domain management, change
+`NEXT_PUBLIC_SITE_URL` in `netlify.toml` to the new address, and push. To send
+inquiries from that domain, also verify it in Resend and set
+`CONTACT_FROM_EMAIL` (see [Contact form](#contact-form)).
+
+**Local development** needs no configuration: without `NEXT_PUBLIC_SITE_URL`,
+the site URL falls back to `http://localhost:3000`. To build locally with the
+production URL, set it in `.env.local` (git-ignored).
 
 ---
 
