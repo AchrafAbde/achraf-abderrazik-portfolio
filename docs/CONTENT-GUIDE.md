@@ -309,14 +309,14 @@ languages, switch with **EN · FR**, and an unknown address such as
 
 **Publishing (Netlify):** the site deploys from GitHub. Commit, then push to
 `main` (`github.com/AchrafAbde/achraf-abderrazik-portfolio`): Netlify builds and
-publishes https://achraf-abderrazik.netlify.app automatically. Follow the build
+publishes https://achraf-abderrazik.online automatically. Follow the build
 in Netlify → Deploys.
 
 Environment variables (all listed, without values, in `.env.example`):
 
 | Variable | Where it's set | Purpose |
 | -------- | -------------- | ------- |
-| `NEXT_PUBLIC_SITE_URL` | `netlify.toml` | The public production URL, `https://achraf-abderrazik.netlify.app`. Used for canonical URLs, `hreflang`, the sitemap, robots.txt and share links. Read at build time, so a change needs a new deploy. Locally, leave it unset: the site falls back to `http://localhost:3000`. |
+| `NEXT_PUBLIC_SITE_URL` | `netlify.toml` | The public production URL, `https://achraf-abderrazik.online`. Used for canonical URLs, `hreflang`, the sitemap, robots.txt and share links. Read at build time, so a change needs a new deploy. Locally, leave it unset: the site falls back to `http://localhost:3000`. |
 | `RESEND_API_KEY` | Netlify → Project configuration → Environment variables | Sends inquiries by email with Resend (configured) |
 | `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Netlify environment variables (optional) | Recipient (defaults to the email in `site.ts`) and sender. The sender needs a domain verified in Resend; without one, Resend's test sender only delivers to your Resend account's email. |
 | `CONTACT_WEBHOOK_URL`, `CONTACT_WEBHOOK_SECRET` | Netlify environment variables (optional) | Send inquiries to a webhook (e.g. n8n) instead of Resend |
@@ -324,8 +324,10 @@ Environment variables (all listed, without values, in `.env.example`):
 Keys never go in the repository: `.env*` files are git-ignored, except
 `.env.example`, which has no values.
 
-**Custom domain (later):** add it in Netlify → Domain management, then change
-`NEXT_PUBLIC_SITE_URL` in `netlify.toml` to the new address and push.
+**Domains:** `achraf-abderrazik.online` is the primary domain (Netlify → Domain
+management); `www` redirects to it and `achraf-abderrazik.netlify.app` stays as
+an alias. If the primary domain ever changes, update `NEXT_PUBLIC_SITE_URL` in
+`netlify.toml` and push.
 
 Without a webhook or Resend key, the form offers to send the inquiry from the
 visitor's email app instead.

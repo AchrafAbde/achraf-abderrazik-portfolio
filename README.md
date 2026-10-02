@@ -7,7 +7,7 @@ English and French, at `/en` and `/fr`.
 
 **Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion · deployed on Netlify.
 
-**Live:** https://achraf-abderrazik.netlify.app
+**Live:** https://achraf-abderrazik.online
 
 **To change any text, project or image, see [`docs/CONTENT-GUIDE.md`](docs/CONTENT-GUIDE.md).**
 
@@ -45,7 +45,8 @@ Requires Node.js 20.9 or newer.
    Every number comes from your CV or your GitHub READMEs.
 4. **Contact form:** `RESEND_API_KEY` is set in Netlify. Check the sender
    limits in [Contact form](#contact-form).
-5. **Custom domain (later):** see [Deploying](#deploying).
+5. **Domain:** `achraf-abderrazik.online` is the primary domain; see
+   [Deploying](#deploying).
 
 ### Your portrait
 
@@ -227,9 +228,10 @@ visitor's language, e.g. `(FR)`.
 `CONTACT_FROM_EMAIL` must be a sender on a domain verified in Resend. Until you
 have one, leave it unset: inquiries are then sent from Resend's test address,
 `onboarding@resend.dev`, which only delivers to the email address of your
-Resend account. Make sure the recipient is that address. A `netlify.app`
-address can't be verified in Resend (you don't control its DNS); once you have
-a custom domain, verify it in Resend and set `CONTACT_FROM_EMAIL`.
+Resend account. Make sure the recipient is that address. To send from your own
+domain instead, verify `achraf-abderrazik.online` in Resend (it gives you DNS
+records to add at your DNS provider), then set `CONTACT_FROM_EMAIL` to an
+address on it.
 
 If neither is configured, the endpoint answers `503`. The form then offers a
 one-click "Send by email instead" fallback, written in the visitor's language,
@@ -245,11 +247,11 @@ The site is hosted on **Netlify** and deploys from GitHub:
 
 - **Source:** `github.com/AchrafAbde/achraf-abderrazik-portfolio`, branch `main`.
 - **Every push to `main`** builds and publishes the production site at
-  https://achraf-abderrazik.netlify.app. Follow builds in Netlify → Deploys.
+  https://achraf-abderrazik.online. Follow builds in Netlify → Deploys.
   Netlify detects Next.js and builds it with its Next.js runtime; there are no
   build settings to maintain.
 - **`NEXT_PUBLIC_SITE_URL`** is the public production URL, set in
-  `netlify.toml` to `https://achraf-abderrazik.netlify.app`. It's used for
+  `netlify.toml` to `https://achraf-abderrazik.online`. It's used for
   canonical URLs, `hreflang`, the sitemap, robots.txt, share images and
   structured data. Next.js reads it at build time, so a change takes effect on
   the next deploy. Values in `netlify.toml` override the same settings in the
@@ -258,10 +260,11 @@ The site is hosted on **Netlify** and deploys from GitHub:
   set in Netlify → Project configuration → Environment variables, never in the
   repository. `.env.example` lists every variable, without values.
 
-**Custom domain (later):** add it in Netlify → Domain management, change
-`NEXT_PUBLIC_SITE_URL` in `netlify.toml` to the new address, and push. To send
-inquiries from that domain, also verify it in Resend and set
-`CONTACT_FROM_EMAIL` (see [Contact form](#contact-form)).
+**Domains** (Netlify → Domain management): `achraf-abderrazik.online` is the
+primary domain and the canonical address; `www.achraf-abderrazik.online`
+redirects to it, and `achraf-abderrazik.netlify.app` stays connected as
+Netlify's subdomain. HTTPS certificates are issued by Netlify. If the primary
+domain ever changes, update `NEXT_PUBLIC_SITE_URL` in `netlify.toml` and push.
 
 **Local development** needs no configuration: without `NEXT_PUBLIC_SITE_URL`,
 the site URL falls back to `http://localhost:3000`. To build locally with the

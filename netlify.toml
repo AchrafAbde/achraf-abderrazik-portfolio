@@ -5,5 +5,5 @@
   # The site's public address, used for canonical URLs, hreflang, the sitemap,
   # robots.txt, share images and structured data (src/lib/site-url.ts).
   # Next.js reads it at build time: a change takes effect on the next deploy.
-  # Update it here if the site moves to a custom domain.
-  NEXT_PUBLIC_SITE_URL = "https://achraf-abderrazik.netlify.app"
+  # It's the primary domain; achraf-abderrazik.netlify.app stays as an alias.
+  NEXT_PUBLIC_SITE_URL = "https://achraf-abderrazik.online"
