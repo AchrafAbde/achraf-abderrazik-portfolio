@@ -44,7 +44,7 @@ Each has a value per theme:
 | `fg-muted`    | `#a5a5ad`                  | `#4e4e57`                 | Body copy, secondary text (8:1 / 7.5:1 on canvas) |
 | `fg-subtle`   | `#7c7c85`                  | `#6b6b74`                 | Labels, metadata (4.8:1 on canvas in both)  |
 | `tint`        | `#ffffff`                  | `#000000`                 | The canvas's opposite, only at low opacity: hover fills, hairlines, watermarks (`hover:bg-tint/5`) |
-| `accent`      | `#c6f36b`                  | `#4c740a`                 | Signal: status, focus rings, highlights (5:1 on the light canvas) |
+| `accent`      | `#c6f36b`                  | `#4c740a`                 | Signal: status, focus rings, highlights, the logo's lime (5:1 on the light canvas) |
 | `accent-ink`  | `#0b0e04`                  | `#ffffff`                 | Text/icons placed on the accent             |
 | `danger`      | `#ff8f80`                  | `#b42318`                 | Form errors                                 |
 
@@ -250,8 +250,12 @@ On a 64-unit grid (`src/lib/logo.ts`):
 ### Color
 
 - The A takes the text color: `#f4f4f1` on dark, `#161614` on light.
-- The flow and the dot are the brand lime `#c6f36b` in both themes (not the
-  light theme's deeper text accent).
+- The flow and the dot take the `accent` token. On dark that's the brand lime
+  `#c6f36b`. On light it's the same lime deepened, `#4c740a`: 5.5:1 on white,
+  where `#c6f36b` is 1.3:1 and fades. `#c6f36b` stays the brand color;
+  `#4c740a` is only how it's drawn on a light background.
+- Icons that bring their own dark tile (favicon, app icon, share images) keep
+  `#c6f36b` everywhere, light browser or not.
 - One-color versions (white or ink) keep a 1.5-unit gap where the flow
   passes under the A, so the weave still shows.
 
@@ -259,13 +263,13 @@ On a 64-unit grid (`src/lib/logo.ts`):
 
 | Variant                        | Where                                                              |
 | ------------------------------ | ------------------------------------------------------------------ |
-| `LogoIcon` (color, theme-aware) | Inside `LogoMark`; `variant="mono"` for one-color uses            |
+| `LogoIcon` (color, theme-aware) | Inside `LogoMark`: the A in `fg`, the lime in `accent` (`stroke-accent`, `fill-accent`); `variant="mono"` for one-color uses |
 | `LogoMark` (the 32px tile)     | Header (animated), mobile menu and footer, through `LogoLockup`    |
 | `LogoLockup` (mark + name)     | Header, mobile menu, footer; optional role line (`subtitle`)       |
 | `src/app/icon.svg`, `favicon.ico` | Browser tab: the small version on a dark tile, readable on light and dark tab bars |
 | `src/app/apple-icon.png`, manifest | Home screen: the mark on the dark surface, 180px, opaque      |
 | Share images (`lib/og.tsx`)    | The mark in the header tile of every share image                   |
-| `docs/brand/`                  | Files for use outside the site: `logo.svg` (on dark), `logo-light.svg`, `logo-mono-white.svg`, `logo-mono-dark.svg`, `logo-small*.svg`, `logo-lockup*.svg` (live text in Geist), `app-icon.svg` and `app-icon-1024.png` (profile pictures) |
+| `docs/brand/`                  | Files for use outside the site: `logo.svg` (on dark), `logo-light.svg`, `logo-mono-white.svg`, `logo-mono-dark.svg`, `logo-small*.svg`, `logo-lockup*.svg` (live text in Geist), `app-icon.svg` and `app-icon-1024.png` (profile pictures). The `-light` files are for light backgrounds and use `#4c740a` |
 
 `npm run brand` regenerates every icon and file in `docs/brand/` from
 `src/lib/logo.ts`; the components read the same geometry.
@@ -274,8 +278,9 @@ On a 64-unit grid (`src/lib/logo.ts`):
 
 - Smallest size 16px (the small version below 20px). Keep one dot-width of
   clear space around the mark.
-- Don't recolor the lime, outline, stretch, rotate or add effects; the only
-  color change is a one-color version.
+- Don't recolor the lime, outline, stretch, rotate or add effects. The only
+  color changes are the deeper lime on light backgrounds and a one-color
+  version.
 - In the header it sits in its tile beside the name, never larger than it.
 - **Motion** (header only): the flow draws in once on load and the dot
   arrives; on hover the dot steps 2.5 units up and to the right. Static

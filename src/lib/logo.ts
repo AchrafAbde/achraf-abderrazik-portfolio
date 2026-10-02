@@ -50,8 +50,15 @@ export const logoSmall: LogoGeometry = {
   knockout: "M10 53L31 11L43.09 35.17",
 };
 
-/** The brand lime, the same in both themes (the light theme's text accent is a deeper lime). */
+/** The brand lime: the flow and the dot on dark, and in the icons that bring their own dark tile. */
 export const brandLime = "#c6f36b";
+
+/**
+ * The same lime, deepened for light backgrounds (the light theme's `accent`
+ * token): 5.5:1 on white, where the brand lime is 1.3:1. The brand color
+ * stays `brandLime`; this is only how it's drawn on light.
+ */
+export const brandLimeOnLight = "#4c740a";
 
 /** In one-color versions, the flow stops this far short of the A where it passes under it. */
 export const logoKnockout = 1.5;

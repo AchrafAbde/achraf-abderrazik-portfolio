@@ -1,10 +1,10 @@
 import { useId } from "react";
 
 import { cn } from "@/lib/cn";
-import { brandLime, logo, logoKnockout, logoSmall } from "@/lib/logo";
+import { logo, logoKnockout, logoSmall } from "@/lib/logo";
 
 type LogoIconProps = {
-  /** "color": the A in the text color, the flow and the dot in lime. "mono": all in the text color. */
+  /** "color": the A in the text color, the flow and the dot in the accent. "mono": all in the text color. */
   variant?: "color" | "mono";
   /** The heavier geometry, for sizes under 20px. */
   small?: boolean;
@@ -16,12 +16,13 @@ type LogoIconProps = {
 /**
  * The symbol alone: an A (Achraf), a lime flow woven through it that forms a
  * second, softer A on the same feet (Abderrazik), and the next data point.
- * The A takes the current text color, so it follows the theme; the lime stays.
+ * The A takes the current text color and the lime the accent token: the brand
+ * lime on dark, the same lime deepened on light. Both follow the theme.
  */
 export function LogoIcon({ variant = "color", small = false, animated = false, className }: LogoIconProps) {
   const g = small ? logoSmall : logo;
   const mono = variant === "mono";
-  const accent = mono ? "currentColor" : brandLime;
+  const accent = mono ? "currentColor" : undefined;
   // In one color, a hairline gap keeps the flow visibly passing under the A.
   const maskId = `logo-knockout-${useId().replace(/[^\w-]/g, "")}`;
 
@@ -41,7 +42,7 @@ export function LogoIcon({ variant = "color", small = false, animated = false, c
         </mask>
       ) : null}
       <path
-        className="logo-flow"
+        className={cn("logo-flow", !mono && "stroke-accent")}
         d={g.flow}
         pathLength={1}
         stroke={accent}
@@ -52,7 +53,13 @@ export function LogoIcon({ variant = "color", small = false, animated = false, c
       />
       <path d={g.a} stroke="currentColor" strokeWidth={g.stroke} strokeLinejoin="round" />
       <circle cx={g.foot[0]} cy={g.foot[1]} r={g.stroke / 2} fill="currentColor" />
-      <circle className="logo-dot" cx={g.dot[0]} cy={g.dot[1]} r={g.dotRadius} fill={accent} />
+      <circle
+        className={cn("logo-dot", !mono && "fill-accent")}
+        cx={g.dot[0]}
+        cy={g.dot[1]}
+        r={g.dotRadius}
+        fill={accent}
+      />
     </svg>
   );
 }
