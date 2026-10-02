@@ -33,7 +33,7 @@ export const site: SiteContent = {
 
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/achraf-abderrazik/" },
-    { label: "GitHub", href: "https://github.com/AchrafAbde" },
+    { label: "GitHub", href: "https://github.com/AchrafAbderrazik" },
   ],
 
   // A tall photo is shown as a horizontal band: the second `position` value

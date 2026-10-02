@@ -19,7 +19,7 @@ import { trendradar } from "./trendradar";
  *
  * Sources of truth (do not add anything they don't support):
  * - CV (EN/FR, 2026)            → experience, metrics, stacks
- * - GitHub READMEs (AchrafAbde) → AMAN, TrendRadar, Car Rental, Surveillance, Baby Growth
+ * - GitHub READMEs (AchrafAbderrazik) → AMAN, TrendRadar, Car Rental, Surveillance, Baby Growth
  */
 export const projects: Project[] = [
   safeInvest,

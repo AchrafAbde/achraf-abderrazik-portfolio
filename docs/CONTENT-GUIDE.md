@@ -308,7 +308,7 @@ languages, switch with **EN · FR**, and an unknown address such as
 `/fr/nimporte-quoi` (the French 404).
 
 **Publishing (Netlify):** the site deploys from GitHub. Commit, then push to
-`main` (`github.com/AchrafAbde/achraf-abderrazik-portfolio`): Netlify builds and
+`main` (`github.com/AchrafAbderrazik/achraf-abderrazik-portfolio`): Netlify builds and
 publishes https://achraf-abderrazik.online automatically. Follow the build
 in Netlify → Deploys.
 

@@ -245,7 +245,7 @@ See `.env.example` for every variable.
 
 The site is hosted on **Netlify** and deploys from GitHub:
 
-- **Source:** `github.com/AchrafAbde/achraf-abderrazik-portfolio`, branch `main`.
+- **Source:** `github.com/AchrafAbderrazik/achraf-abderrazik-portfolio`, branch `main`.
 - **Every push to `main`** builds and publishes the production site at
   https://achraf-abderrazik.online. Follow builds in Netlify → Deploys.
   Netlify detects Next.js and builds it with its Next.js runtime; there are no
