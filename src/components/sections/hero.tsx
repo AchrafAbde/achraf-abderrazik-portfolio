@@ -179,6 +179,8 @@ function HeroIntro({ site, className }: { site: Content["site"]; className?: str
  * Layers, back to front: photo (moves against the pointer), static grade,
  * load veil and light sweep, technical overlay (moves with it), hairline.
  * The frame itself follows the pointer a few pixels. See <HeroMotion>.
+ * A photograph with light text on it, so it keeps the dark palette in both
+ * themes (data-theme="dark"); on phones it fades into the page's own canvas.
  */
 function PortraitFrame({
   site,
@@ -193,7 +195,10 @@ function PortraitFrame({
     <div data-parallax="frame" className="relative">
       <CornerMarks />
 
-      <div className="relative isolate aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-surface sm:aspect-[5/4] lg:aspect-[4/5] lg:max-h-[max(26rem,calc(100svh-12rem))] lg:w-full lg:rounded-[1.5rem]">
+      <div
+        data-theme="dark"
+        className="relative isolate aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-surface sm:aspect-[5/4] lg:aspect-[4/5] lg:max-h-[max(26rem,calc(100svh-12rem))] lg:w-full lg:rounded-[1.5rem]"
+      >
         {/* Oversized so the parallax never reveals an edge. */}
         <div data-parallax="image" className="absolute -inset-x-[4%] -inset-y-[7%]">
           <div className="hero-develop absolute inset-0">
@@ -221,7 +226,7 @@ function PortraitFrame({
         {/* Tonal grade: keeps labels and the overlapping headline legible. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,var(--color-canvas)_0%,rgb(8_8_10/0.55)_24%,transparent_58%),linear-gradient(to_bottom,rgb(8_8_10/0.75),rgb(8_8_10/0.35)_15%,transparent_32%)] lg:bg-[linear-gradient(to_top,rgb(8_8_10/0.7)_0%,transparent_38%),linear-gradient(to_bottom,rgb(8_8_10/0.75),rgb(8_8_10/0.35)_15%,transparent_32%)]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,var(--page-canvas)_0%,color-mix(in_oklab,var(--page-canvas)_55%,transparent)_24%,transparent_58%),linear-gradient(to_bottom,rgb(8_8_10/0.75),rgb(8_8_10/0.35)_15%,transparent_32%)] lg:bg-[linear-gradient(to_top,rgb(8_8_10/0.7)_0%,transparent_38%),linear-gradient(to_bottom,rgb(8_8_10/0.75),rgb(8_8_10/0.35)_15%,transparent_32%)]"
         />
         <div aria-hidden="true" className="hero-grain pointer-events-none absolute inset-0" />
 
@@ -281,7 +286,7 @@ function PortraitOverlay({ site }: { site: Content["site"] }) {
 
 /** Registration marks just outside the frame corners. */
 function CornerMarks() {
-  const mark = "hero-mark pointer-events-none absolute size-3.5 border-white/25";
+  const mark = "hero-mark pointer-events-none absolute size-3.5 border-tint/25";
   const style = delay(timing.meta);
   return (
     <div aria-hidden="true">
@@ -312,7 +317,7 @@ function PortraitPlaceholder({ hint, src }: { hint: string; src: string }) {
     >
       <div className="absolute inset-0 bg-dots opacity-60 [mask-image:radial-gradient(65%_55%_at_50%_40%,black,transparent)]" />
       <div className="absolute inset-0 grid place-items-center pb-[12%]">
-        <span className="font-accent text-[clamp(8rem,26vw,15rem)] leading-none text-white/[0.07] select-none">
+        <span className="font-accent text-[clamp(8rem,26vw,15rem)] leading-none text-tint/[0.07] select-none">
           AA
         </span>
       </div>

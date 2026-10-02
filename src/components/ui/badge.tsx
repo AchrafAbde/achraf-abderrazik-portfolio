@@ -33,7 +33,7 @@ export function ProjectBadge({ kind, children, className }: ProjectBadgeProps) {
         "inline-flex h-7 items-center gap-2 rounded-full border px-3 font-mono text-[0.6875rem] tracking-[0.06em] whitespace-nowrap uppercase",
         isProfessionalKind(kind)
           ? "border-accent/30 bg-accent/[0.07] text-fg"
-          : "border-line-strong bg-white/[0.02] text-fg-muted",
+          : "border-line-strong bg-tint/[0.02] text-fg-muted",
         className,
       )}
     >
@@ -53,7 +53,7 @@ export function Tag({ children, className }: TagProps) {
   return (
     <span
       className={cn(
-        "inline-flex h-7 items-center rounded-md border border-line bg-white/[0.025] px-2.5 font-mono text-xs text-fg-muted",
+        "inline-flex h-7 items-center rounded-md border border-line bg-tint/[0.025] px-2.5 font-mono text-xs text-fg-muted",
         className,
       )}
     >
@@ -72,7 +72,7 @@ export function StatusPill({ children, className }: StatusPillProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-white/[0.03] py-1.5 pr-3.5 pl-3 text-sm text-fg-muted",
+        "inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-tint/[0.03] py-1.5 pr-3.5 pl-3 text-sm text-fg-muted",
         className,
       )}
     >

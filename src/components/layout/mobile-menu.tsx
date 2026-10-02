@@ -12,6 +12,7 @@ import { ArrowUpRightIcon, CloseIcon } from "../ui/icons";
 import { LanguageSwitch } from "./language-switch";
 import { LogoMark } from "./logo";
 import type { SiteHeaderProps } from "./site-header";
+import { ThemePicker } from "./theme-switch";
 
 type MobileMenuProps = SiteHeaderProps & {
   languageHash: string;
@@ -114,7 +115,7 @@ export function MobileMenu({
             type="button"
             onClick={() => onClose()}
             aria-label={labels.closeMenu}
-            className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-fg transition-colors hover:bg-white/5"
+            className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-fg transition-colors hover:bg-tint/5"
           >
             <CloseIcon size={22} />
           </button>
@@ -153,6 +154,12 @@ export function MobileMenu({
           transition={{ duration: 0.5, ease: easeOutQuint, delay: 0.3 }}
           className="mt-12 flex flex-col gap-6"
         >
+          <div className="flex flex-col gap-3">
+            <p aria-hidden="true" className="font-mono text-eyebrow text-fg-subtle uppercase">
+              {labels.theme.label}
+            </p>
+            <ThemePicker labels={labels.theme} className="w-full" />
+          </div>
           <ButtonLink
             href={cta.href}
             size="lg"

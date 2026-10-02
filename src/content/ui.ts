@@ -19,6 +19,14 @@ export const ui: UiContent = {
 
   language: { label: { en: "Language", fr: "Langue" } },
 
+  theme: {
+    label: { en: "Theme", fr: "Thème" },
+    current: { en: "Theme: {theme}", fr: "Thème : {theme}" },
+    dark: { en: "Dark", fr: "Sombre" },
+    light: { en: "Light", fr: "Clair" },
+    system: { en: "System", fr: "Système" },
+  },
+
   footer: {
     navigate: { en: "Navigate", fr: "Navigation" },
     getInTouch: { en: "Get in touch", fr: "Me contacter" },

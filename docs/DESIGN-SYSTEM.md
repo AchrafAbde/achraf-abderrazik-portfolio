@@ -1,7 +1,8 @@
 # Design system
 
-A small, strict system for a dark, editorial and technical portfolio.
-Tokens live in `src/app/globals.css` (Tailwind v4 `@theme`), components in
+A small, strict system for an editorial and technical portfolio: dark by
+default, with a light theme translated from it. Tokens live in
+`src/app/globals.css` (Tailwind v4 `@theme`), components in
 `src/components/ui` and `src/components/motion`.
 
 ## Principles
@@ -11,7 +12,9 @@ Tokens live in `src/app/globals.css` (Tailwind v4 `@theme`), components in
 2. **One accent, used sparingly.** The signal lime marks state and emphasis
    (availability, real-world work, the signal in diagrams). Never large surfaces.
 3. **Depth from light, not shadow.** On a near-black canvas, hierarchy comes
-   from surface steps and 1px borders instead of drop shadows.
+   from surface steps and 1px borders instead of drop shadows. In the light
+   theme, white cards lift off the paper with one soft, restrained shadow
+   (`shadow-card`).
 4. **Motion with meaning.** The hero "develops" the portrait, diagrams show data
    flowing through a system, and transitions show direction. Everything else
    uses short, eased entrances. Loops pause off-screen, and everything respects
@@ -27,23 +30,51 @@ Tokens live in `src/app/globals.css` (Tailwind v4 `@theme`), components in
 
 Tailwind's default palette is reset (`--color-*: initial`), so only these
 tokens exist. Use them as `bg-*`, `text-*`, `border-*`, `fill-*`, `stroke-*`.
+Each has a value per theme:
 
-| Token         | Value                      | Use                                         |
-| ------------- | -------------------------- | ------------------------------------------- |
-| `canvas`      | `#08080a`                  | Page background                             |
-| `surface`     | `#0e0e11`                  | Cards, panels                               |
-| `surface-2`   | `#141418`                  | Raised elements inside cards                |
-| `surface-3`   | `#1b1b20`                  | Rare, highest elevation                     |
-| `line`        | `rgb(255 255 255 / 0.08)`  | Hairlines and default borders               |
-| `line-strong` | `rgb(255 255 255 / 0.14)`  | Interactive borders, emphasis               |
-| `fg`          | `#f4f4f1`                  | Primary text and headings                   |
-| `fg-muted`    | `#a5a5ad`                  | Body copy, secondary text (8:1 on canvas)   |
-| `fg-subtle`   | `#7c7c85`                  | Labels, metadata (4.8:1 on canvas)          |
-| `accent`      | `#c6f36b`                  | Signal: status, focus rings, highlights     |
-| `accent-ink`  | `#0b0e04`                  | Text/icons placed on the accent             |
-| `danger`      | `#ff8f80`                  | Form errors                                 |
+| Token         | Dark                       | Light                     | Use                                         |
+| ------------- | -------------------------- | ------------------------- | ------------------------------------------- |
+| `canvas`      | `#08080a`                  | `#f5f4f0`                 | Page background                             |
+| `surface`     | `#0e0e11`                  | `#ffffff`                 | Cards, panels                               |
+| `surface-2`   | `#141418`                  | `#ffffff`                 | Raised elements inside cards                |
+| `surface-3`   | `#1b1b20`                  | `#ffffff`                 | Rare, highest elevation                     |
+| `line`        | `rgb(255 255 255 / 0.08)`  | `rgb(20 20 24 / 0.1)`     | Hairlines and default borders               |
+| `line-strong` | `rgb(255 255 255 / 0.14)`  | `rgb(20 20 24 / 0.17)`    | Interactive borders, emphasis               |
+| `fg`          | `#f4f4f1`                  | `#161614`                 | Primary text and headings                   |
+| `fg-muted`    | `#a5a5ad`                  | `#4e4e57`                 | Body copy, secondary text (8:1 / 7.5:1 on canvas) |
+| `fg-subtle`   | `#7c7c85`                  | `#6b6b74`                 | Labels, metadata (4.8:1 on canvas in both)  |
+| `tint`        | `#ffffff`                  | `#000000`                 | The canvas's opposite, only at low opacity: hover fills, hairlines, watermarks (`hover:bg-tint/5`) |
+| `accent`      | `#c6f36b`                  | `#4c740a`                 | Signal: status, focus rings, highlights (5:1 on the light canvas) |
+| `accent-ink`  | `#0b0e04`                  | `#ffffff`                 | Text/icons placed on the accent             |
+| `danger`      | `#ff8f80`                  | `#b42318`                 | Form errors                                 |
 
 Opacity modifiers are fine for tints (`bg-accent/10`, `border-accent/40`).
+Never use `white` or `black` for an overlay: `tint` turns with the theme.
+`white` is for things drawn on a photograph.
+
+### Themes
+
+- **Dark** is the original palette and the default without JavaScript;
+  **light** is the same system translated: warm paper, white cards, charcoal
+  ink, and the lime deepened so it reads as text. Contrast steps match, so the
+  hierarchy is the same in both.
+- The visitor chooses Dark, Light or System (the default: follow the
+  operating system). The choice is saved in `localStorage` (`theme`).
+- A blocking script in `<head>` (`lib/theme.ts`) sets `data-theme` on
+  `<html>` before the first paint, so the page never flashes the other theme,
+  and follows system changes while System is chosen. No URL changes: the theme
+  is never part of an address.
+- `globals.css` holds the dark values in `@theme` and overrides the same
+  variables under `[data-theme="light"]`; other theme values (shadows, film
+  grain, spotlight) are plain variables beside them. In CSS, use the
+  variables (`var(--color-canvas)`), so a theme can switch them.
+- `data-theme="dark"` on an element keeps the dark palette inside a light
+  page: the portrait, a photograph with light text on it. Inside it,
+  `--page-canvas` is still the page's own canvas.
+- A new color needs a value in both themes; check its contrast in both.
+
+Opacity modifiers compile to `color-mix()` with the live variable, and to a
+fallback precomputed from the dark value for older browsers.
 
 ## Typography
 
@@ -87,6 +118,8 @@ them: `*words*` becomes the Instrument Serif accent, `**words**` brighter
   menu button opens the full-screen menu. **EN · FR** sits in the bar from
   360px up and at the top of the mobile menu. Both links are the same size and
   the current one only changes color, so switching never shifts the header.
+  The theme switch follows the navigation: an icon button beside EN · FR from
+  `lg`, a three-way control above the call to action in the mobile menu.
 
 ## Two languages
 
@@ -149,6 +182,9 @@ Patterns:
 - **Page transitions:** `<PageTransition>` on each page; links carry
   `transitionTypes={["nav-forward"]}` or `["nav-back"]`. `<SharedTitle>` morphs a
   project title between the list and its case study.
+- **Theme switch:** one 0.32s cross-fade of the whole page (a view
+  transition, header included); instant with reduced motion or where view
+  transitions aren't supported.
 - **Scroll reveals:** `<Reveal>` for single blocks, `<RevealGroup>` +
   `<RevealItem>` for lists. They animate once, and content stays visible
   without JavaScript.
@@ -170,6 +206,9 @@ face. The treatment is CSS, applied in layers above the photo:
   from the face, plus the sweep's glow, one ruler tick and the location dot.
 - **Technical overlay:** name and role, coordinates, location and a scale ruler
   (`hero-ruler`). Never face-detection boxes, particles or fake AI read-outs.
+- **Themes:** the frame keeps the dark palette in both themes
+  (`data-theme="dark"`), like a print on the page. On phones its bottom fades
+  into the page's canvas, so the overlapping headline reads in either theme.
 
 ## Components
 
@@ -193,12 +232,18 @@ face. The treatment is CSS, applied in layers above the photo:
 | `PageTransition`, `SharedTitle` | `motion/page-transition.tsx` | React `<ViewTransition>` wrappers |
 | `SiteShell`                  | `layout/site-shell.tsx`      | Skip link, header, `main`, footer and site-wide JSON-LD around every page |
 | `LanguageSwitch`             | `layout/language-switch.tsx` | `EN · FR`: links to the same page in each language; current one marked |
+| `ThemeSwitch`, `ThemePicker` | `layout/theme-switch.tsx`    | Dark · Light · System: header menu button (from `lg`) and the mobile menu's radio group |
+| `ThemeScript`                | `layout/theme-script.tsx`    | The `<head>` script that applies the saved theme before the first paint |
 | `Inline`                     | `ui/inline.tsx`              | Renders `*accent*` and `**emphasis**` from content text |
 | `NotFoundView`               | `sections/not-found-view.tsx` | The 404 page body                                 |
 
 ## Accessibility checklist
 
-- Text contrast ≥ 4.5:1 (`fg-subtle` is the lowest allowed for small text).
+- Text contrast ≥ 4.5:1 in both themes (`fg-subtle` is the lowest allowed for
+  small text).
+- The theme switch works from the keyboard: the header menu button opens with
+  Enter, Space or the arrow keys and closes with Escape; the mobile radio group
+  moves with the arrow keys. Each control names the current choice.
 - Every section is labelled by its heading; one `h1` per page.
 - Focus is always visible (`outline: 2px solid accent`).
 - Decorative SVGs and visuals are `aria-hidden`; meaningful icons have labels.

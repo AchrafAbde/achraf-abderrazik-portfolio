@@ -40,7 +40,7 @@ export function CopyEmail({ email, labels }: CopyEmailProps) {
         type="button"
         onClick={copy}
         aria-label={copied ? labels.copied : labels.copy}
-        className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line-strong text-fg-muted transition-colors hover:border-white/25 hover:text-fg"
+        className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line-strong text-fg-muted transition-colors hover:border-tint/25 hover:text-fg"
       >
         {copied ? <CheckIcon size={16} className="text-accent" /> : <CopyIcon size={16} />}
       </button>

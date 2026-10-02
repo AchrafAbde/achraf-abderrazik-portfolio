@@ -294,6 +294,8 @@ export type UiContent = {
   skipLink: Copy;
   header: { home: Copy; mainNav: Copy; openMenu: Copy; closeMenu: Copy; menu: Copy; mobileNav: Copy };
   language: { label: Copy };
+  /** The theme switch. `current` takes `{theme}`, the name of the current choice. */
+  theme: { label: Copy; current: Copy; dark: Copy; light: Copy; system: Copy };
   footer: { navigate: Copy; getInTouch: Copy; inquiry: Copy; rights: Copy; backToTop: Copy; nav: Copy };
   hero: { portraitPlaceholder: Copy };
   work: { readCaseStudy: Copy; pipeline: Copy; technologies: Copy; githubRepo: Copy };

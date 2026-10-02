@@ -326,7 +326,7 @@ function Progression({ locale, study }: { locale: Locale; study: CaseStudy }) {
               <span className="mt-1.5 text-[0.8125rem] leading-relaxed text-fg-muted">{metric.meaning}</span>
 
               <span aria-hidden="true" className="mt-auto block pt-7">
-                <span className={cn("block h-1 overflow-hidden rounded-full", last ? "bg-accent/15" : "bg-white/[0.07]")}>
+                <span className={cn("block h-1 overflow-hidden rounded-full", last ? "bg-accent/15" : "bg-tint/[0.07]")}>
                   <span
                     className={cn("meter-fill block h-full rounded-full", last ? "bg-accent" : "bg-fg-subtle")}
                     style={{ width: `${(share * 100).toFixed(1)}%` }}
@@ -507,7 +507,7 @@ function NextCaseStudy({
         <Link
           href={localizeHref(locale, `/work/${study.slug}`)}
           transitionTypes={["nav-forward"]}
-          className="group relative block overflow-hidden rounded-[1.75rem] border border-line bg-surface p-7 transition-colors duration-500 hover:border-line-strong sm:p-10 lg:p-14"
+          className="group relative block overflow-hidden rounded-[1.75rem] border border-line bg-surface p-7 shadow-card transition-colors duration-500 hover:border-line-strong sm:p-10 lg:p-14"
         >
           <span className="font-mono text-eyebrow text-fg-subtle uppercase">{labels.next}</span>
           <span className="mt-6 flex items-end justify-between gap-6">

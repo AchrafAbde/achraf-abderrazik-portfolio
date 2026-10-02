@@ -34,7 +34,7 @@ export function Contact({ locale, contact, site }: ContactProps) {
       className="relative py-24 sm:py-28 lg:py-32"
     >
       <Container>
-        <Reveal className="relative isolate overflow-hidden rounded-[1.75rem] border border-line bg-surface">
+        <Reveal className="relative isolate overflow-hidden rounded-[1.75rem] border border-line bg-surface shadow-card">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_60%_70%_at_0%_0%,black,transparent)]" />
           </div>
@@ -98,7 +98,7 @@ export function Contact({ locale, contact, site }: ContactProps) {
                               href={social.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex h-9 items-center gap-2 rounded-full border border-line-strong px-4 text-sm text-fg-muted transition-colors hover:border-white/25 hover:text-fg"
+                              className="inline-flex h-9 items-center gap-2 rounded-full border border-line-strong px-4 text-sm text-fg-muted transition-colors hover:border-tint/25 hover:text-fg"
                             >
                               <Icon size={15} />
                               {social.label}

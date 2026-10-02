@@ -222,7 +222,7 @@ export function ContactForm({ locale, email, copy }: { locale: Locale; email: st
                 className={cn(
                   "inline-flex h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-sm text-fg-muted",
                   "transition-[background-color,border-color,color] duration-300",
-                  "group-hover:border-white/25 group-hover:text-fg",
+                  "group-hover:border-tint/25 group-hover:text-fg",
                   "peer-checked:border-accent/50 peer-checked:bg-accent/10 peer-checked:text-fg",
                   "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent",
                 )}
@@ -303,7 +303,7 @@ export function ContactForm({ locale, email, copy }: { locale: Locale; email: st
 const controlClasses =
   "w-full rounded-xl border bg-surface/60 px-4 text-base text-fg placeholder:text-fg-subtle " +
   "transition-[border-color,box-shadow,background-color] duration-300 " +
-  "hover:border-white/20 focus:bg-surface focus:outline-none focus-visible:outline-none " +
+  "hover:border-tint/20 focus:bg-surface focus:outline-none focus-visible:outline-none " +
   "focus:border-accent/60 focus:ring-4 focus:ring-accent/10";
 
 type FieldShellProps = {

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { PathLocale } from "@/components/layout/path-locale";
 import { SiteShell } from "@/components/layout/site-shell";
+import { ThemeScript } from "@/components/layout/theme-script";
 import { NotFoundView } from "@/components/sections/not-found-view";
 import { locales, type Locale } from "@/content/i18n";
 import { cn } from "@/lib/cn";
@@ -21,7 +22,14 @@ import "./globals.css";
 function NotFoundDocument({ locale }: { locale: Locale }) {
   const content = getContent(locale);
   return (
-    <html lang={locale} className={cn(fontSans.variable, fontMono.variable, fontSerif.variable)}>
+    <html
+      lang={locale}
+      className={cn(fontSans.variable, fontMono.variable, fontSerif.variable)}
+      suppressHydrationWarning
+    >
+      <head>
+        <ThemeScript />
+      </head>
       <body>
         <title>{`${content.ui.notFound.metaTitle} — ${content.site.name}`}</title>
         <SiteShell content={content}>

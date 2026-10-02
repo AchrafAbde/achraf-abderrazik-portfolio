@@ -11,7 +11,10 @@
 
 @theme {
   /* ---- Color -------------------------------------------------------------
-     Tailwind's default palette is reset so only system tokens can be used. */
+     Tailwind's default palette is reset so only system tokens can be used.
+     These are the dark theme's values, the default. The light theme
+     overrides the same variables ("Themes" below). Kept as literal colors:
+     Tailwind precomputes fallbacks for browsers without color-mix() from them. */
   --color-*: initial;
   --color-white: #ffffff;
   --color-black: #000000;
@@ -26,6 +29,8 @@
   --color-fg: #f4f4f1;
   --color-fg-muted: #a5a5ad;
   --color-fg-subtle: #7c7c85;
+  /* The canvas's opposite, only at low opacity: hover fills, hairlines, watermarks */
+  --color-tint: #ffffff;
 
   /* Accent — a single "signal" color, used sparingly for state and emphasis */
   --color-accent: #c6f36b;
@@ -136,6 +141,90 @@
 }
 
 /* ==========================================================================
+   Themes
+   Dark is the original palette, and the default without JavaScript. Light
+   is the same system translated: a warm paper canvas, white cards, charcoal
+   ink, and the lime deepened so it reads as text. The <head> script
+   (lib/theme.ts) sets data-theme on <html> before the first paint. An
+   element with data-theme="dark" keeps the dark palette inside a light page:
+   the portrait, a photograph with light text on it.
+   ========================================================================== */
+
+@layer base {
+  /* Dark: the colors are the @theme values; the rest of the theme is here. */
+  :root,
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Depth comes from surface steps and hairlines, not shadows */
+    --shadow-card: none;
+    --shadow-popover: none;
+    --shadow-button: inset 0 -1px 0 rgb(0 0 0 / 0.18), 0 1px 2px rgb(0 0 0 / 0.4);
+    --spotlight: rgb(255 255 255 / 0.045);
+
+    /* Film grain: light noise */
+    --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    --grain-opacity: 0.03;
+  }
+
+  /* A dark island inside a light page restates the dark colors: the same
+     values as @theme, which can't be referenced from here. */
+  [data-theme="dark"] {
+    --color-canvas: #08080a;
+    --color-surface: #0e0e11;
+    --color-surface-2: #141418;
+    --color-surface-3: #1b1b20;
+    --color-line: rgb(255 255 255 / 0.08);
+    --color-line-strong: rgb(255 255 255 / 0.14);
+    --color-fg: #f4f4f1;
+    --color-fg-muted: #a5a5ad;
+    --color-fg-subtle: #7c7c85;
+    --color-tint: #ffffff;
+    --color-accent: #c6f36b;
+    --color-accent-ink: #0b0e04;
+    --color-danger: #ff8f80;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+
+    /* Neutrals — warm paper, white cards, charcoal ink (contrast as in dark) */
+    --color-canvas: #f5f4f0;
+    --color-surface: #ffffff;
+    --color-surface-2: #ffffff;
+    --color-surface-3: #ffffff;
+    --color-line: rgb(20 20 24 / 0.1);
+    --color-line-strong: rgb(20 20 24 / 0.17);
+    --color-fg: #161614;
+    --color-fg-muted: #4e4e57;
+    --color-fg-subtle: #6b6b74;
+    --color-tint: #000000;
+
+    /* The same lime, deepened to read as text (5:1 on the canvas) */
+    --color-accent: #4c740a;
+    --color-accent-ink: #ffffff;
+
+    --color-danger: #b42318;
+
+    /* White surfaces lift off the paper with soft, restrained shadows */
+    --shadow-card: 0 1px 2px rgb(20 20 24 / 0.04), 0 12px 32px -18px rgb(20 20 24 / 0.16);
+    --shadow-popover: 0 2px 6px rgb(20 20 24 / 0.06), 0 18px 40px -16px rgb(20 20 24 / 0.24);
+    --shadow-button: inset 0 -1px 0 rgb(0 0 0 / 0.24), 0 1px 2px rgb(20 20 24 / 0.2);
+    --spotlight: color-mix(in oklab, var(--color-accent) 7%, transparent);
+
+    /* Film grain: dark noise */
+    --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    --grain-opacity: 0.03;
+  }
+
+  /* The page's own canvas, also inside a dark island: on phones the
+     portrait fades into the page below it. */
+  :root {
+    --page-canvas: var(--color-canvas);
+  }
+}
+
+/* ==========================================================================
    Custom utilities
    ========================================================================== */
 
@@ -150,15 +239,29 @@
 /* Hairline grid used as a quiet background texture. */
 @utility bg-grid {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in oklab, var(--color-tint) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-tint) 5%, transparent) 1px, transparent 1px);
   background-size: 72px 72px;
 }
 
 /* Dotted texture for illustration plates. */
 @utility bg-dots {
-  background-image: radial-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1.2px);
+  background-image: radial-gradient(color-mix(in oklab, var(--color-tint) 9%, transparent) 1px, transparent 1.2px);
   background-size: 18px 18px;
+}
+
+/* Elevation: none in the dark theme, a soft shadow in the light one. */
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+@utility shadow-popover {
+  box-shadow: var(--shadow-popover);
+}
+
+/* The primary button's edge, in both themes. */
+@utility shadow-button {
+  box-shadow: var(--shadow-button);
 }
 
 /* ==========================================================================
@@ -167,7 +270,6 @@
 
 @layer base {
   html {
-    color-scheme: dark;
     background-color: var(--color-canvas);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -193,8 +295,8 @@
     inset: 0;
     z-index: 100;
     pointer-events: none;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: var(--grain-opacity);
+    background-image: var(--grain);
   }
 
   ::selection {
@@ -523,7 +625,8 @@
     overflow: hidden;
     border: 1px solid var(--color-line);
     border-radius: 1.5rem;
-    background-color: rgb(14 14 17 / 0.7);
+    background-color: color-mix(in oklab, var(--color-surface) 70%, transparent);
+    box-shadow: var(--shadow-card);
     padding: 1.25rem;
   }
 
@@ -533,7 +636,7 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1.2px);
+    background-image: radial-gradient(color-mix(in oklab, var(--color-tint) 7%, transparent) 1px, transparent 1.2px);
     background-size: 18px 18px;
     mask-image: radial-gradient(ellipse 85% 75% at 50% 50%, black, transparent);
   }
@@ -558,8 +661,8 @@
     left: 50%;
     width: 0.4375rem;
     height: 0.4375rem;
-    border-right: 1px solid rgb(255 255 255 / 0.28);
-    border-bottom: 1px solid rgb(255 255 255 / 0.28);
+    border-right: 1px solid color-mix(in oklab, var(--color-tint) 28%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--color-tint) 28%, transparent);
     transform: translateX(-50%) rotate(45deg);
   }
 
@@ -583,7 +686,7 @@
   }
 
   .diagram-node-emphasis {
-    border-color: rgb(198 243 107 / 0.3);
+    border-color: color-mix(in oklab, var(--color-accent) 30%, transparent);
     background-color: color-mix(in oklab, var(--color-surface-2), var(--color-accent) 5%);
   }
 
@@ -592,9 +695,9 @@
     content: "";
     position: absolute;
     inset: -1px;
-    border: 1px solid rgb(198 243 107 / 0.6);
+    border: 1px solid color-mix(in oklab, var(--color-accent) 60%, transparent);
     border-radius: inherit;
-    box-shadow: 0 0 28px -8px rgb(198 243 107 / 0.45);
+    box-shadow: 0 0 28px -8px color-mix(in oklab, var(--color-accent) 45%, transparent);
     opacity: 0;
     pointer-events: none;
   }
@@ -606,7 +709,7 @@
     width: 1px;
     height: 2.25rem;
     overflow: hidden;
-    background-color: rgb(255 255 255 / 0.16);
+    background-color: color-mix(in oklab, var(--color-tint) 16%, transparent);
     transform-origin: top;
   }
 
@@ -735,24 +838,24 @@
   }
 
   .pipeline-link {
-    background-color: rgb(255 255 255 / 0.2);
+    background-color: color-mix(in oklab, var(--color-tint) 20%, transparent);
     transition-property: background-color;
   }
 
   @media (hover: hover) {
     .group:hover .pipeline-step {
-      border-color: rgb(198 243 107 / 0.35);
+      border-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
       color: var(--color-fg);
     }
 
     .group:hover .pipeline-link {
-      background-color: rgb(198 243 107 / 0.6);
+      background-color: color-mix(in oklab, var(--color-accent) 60%, transparent);
     }
   }
 
   .group:focus-visible .pipeline-step,
   .group:focus-within .pipeline-step {
-    border-color: rgb(198 243 107 / 0.35);
+    border-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
     color: var(--color-fg);
   }
 
@@ -761,7 +864,7 @@
   .spotlight {
     background: radial-gradient(
       32rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
-      rgb(255 255 255 / 0.045),
+      var(--spotlight),
       transparent 65%
     );
     opacity: 0;
@@ -932,6 +1035,38 @@
   35% {
     filter: blur(2px);
   }
+}
+
+/* ==========================================================================
+   Theme switch (components/layout/theme-switch)
+   Choosing a theme cross-fades the page once (a view transition). Nothing
+   is named during it, so the header fades with everything else.
+   ========================================================================== */
+
+:root[data-theme-switching] * {
+  view-transition-name: none !important;
+}
+
+:root[data-theme-switching]::view-transition-old(root),
+:root[data-theme-switching]::view-transition-new(root) {
+  animation-duration: 0.32s;
+  animation-timing-function: var(--ease-out-quint);
+}
+
+/* The header button shows the saved choice from the first paint, before
+   React runs. Without JavaScript it can't work, so it stays hidden. */
+[data-theme-icon] {
+  display: none;
+}
+
+:root[data-theme-preference="dark"] [data-theme-icon="dark"],
+:root[data-theme-preference="light"] [data-theme-icon="light"],
+:root[data-theme-preference="system"] [data-theme-icon="system"] {
+  display: block;
+}
+
+:root:not([data-theme-preference]) [data-theme-switch] {
+  visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

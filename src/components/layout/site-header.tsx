@@ -15,6 +15,7 @@ import { ArrowUpRightIcon, MenuIcon } from "../ui/icons";
 import { LanguageSwitch } from "./language-switch";
 import { LogoMark } from "./logo";
 import { MobileMenu } from "./mobile-menu";
+import { ThemeSwitch, type ThemeLabels } from "./theme-switch";
 
 /** Sections observed for the active-link indicator. */
 const observedSections = ["top", "work", "services", "about", "stack", "contact"];
@@ -39,6 +40,7 @@ export type SiteHeaderProps = {
     menu: string;
     mobileNav: string;
     language: string;
+    theme: ThemeLabels;
   };
 };
 
@@ -114,7 +116,7 @@ export function SiteHeader(props: SiteHeaderProps) {
             className="group -ml-1 flex items-center gap-3 rounded-lg p-1 text-fg"
             aria-label={labels.home}
           >
-            <LogoMark className="transition-colors duration-300 group-hover:border-white/25" />
+            <LogoMark className="transition-colors duration-300 group-hover:border-tint/25" />
             <span className="text-[0.9375rem] font-medium tracking-[-0.01em]">{name}</span>
           </Link>
 
@@ -155,6 +157,8 @@ export function SiteHeader(props: SiteHeaderProps) {
               hash={languageHash}
               className="max-[359px]:hidden"
             />
+            {/* From 1024px, like the inline navigation; below, it's in the menu. */}
+            <ThemeSwitch labels={labels.theme} className="hidden lg:block" />
             <ButtonLink
               href={cta.href}
               size="sm"
@@ -170,7 +174,7 @@ export function SiteHeader(props: SiteHeaderProps) {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={labels.openMenu}
-              className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-fg transition-colors hover:bg-white/5 lg:hidden"
+              className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-fg transition-colors hover:bg-tint/5 lg:hidden"
             >
               <MenuIcon size={22} />
             </button>

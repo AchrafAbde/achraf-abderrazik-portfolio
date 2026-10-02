@@ -32,7 +32,7 @@ export function CompactPipeline({ steps, label, className }: CompactPipelineProp
               style={{ "--i": index } as CSSProperties}
             />
             <span
-              className="pipeline-step inline-flex h-7 items-center rounded-md border bg-white/[0.02] px-2.5 whitespace-nowrap"
+              className="pipeline-step inline-flex h-7 items-center rounded-md border bg-tint/[0.02] px-2.5 whitespace-nowrap"
               style={{ "--i": index } as CSSProperties}
             >
               {step}

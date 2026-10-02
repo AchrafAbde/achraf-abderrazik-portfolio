@@ -130,6 +130,33 @@ export function CloseIcon(props: IconProps) {
   );
 }
 
+export function MoonIcon(props: IconProps) {
+  return (
+    <svg {...strokeProps(props)}>
+      <path d="M19.5 14.6A7.5 7.5 0 0 1 9.4 4.5a7.5 7.5 0 1 0 10.1 10.1Z" />
+    </svg>
+  );
+}
+
+export function SunIcon(props: IconProps) {
+  return (
+    <svg {...strokeProps(props)}>
+      <circle cx="12" cy="12" r="3.75" />
+      <path d="M12 3v1.75M12 19.25V21M3 12h1.75M19.25 12H21M5.64 5.64l1.24 1.24M17.12 17.12l1.24 1.24M5.64 18.36l1.24-1.24M17.12 6.88l1.24-1.24" />
+    </svg>
+  );
+}
+
+export function MonitorIcon(props: IconProps) {
+  return (
+    <svg {...strokeProps(props)}>
+      <rect x="3.5" y="4.5" width="17" height="11.5" rx="2.5" />
+      <path d="M9 20h6" />
+      <path d="M12 16v4" />
+    </svg>
+  );
+}
+
 export function LockIcon(props: IconProps) {
   return (
     <svg {...strokeProps(props)}>

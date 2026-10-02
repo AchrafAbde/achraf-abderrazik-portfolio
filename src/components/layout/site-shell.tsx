@@ -35,7 +35,12 @@ export function SiteShell({ content, children }: { content: Content; children: R
           homeHref={href("/#top")}
           email={email}
           socials={socials}
-          labels={{ ...ui.header, home: fill(ui.header.home, { name: site.name }), language: ui.language.label }}
+          labels={{
+            ...ui.header,
+            home: fill(ui.header.home, { name: site.name }),
+            language: ui.language.label,
+            theme: ui.theme,
+          }}
         />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}

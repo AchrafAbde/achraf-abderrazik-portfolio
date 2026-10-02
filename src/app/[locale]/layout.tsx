@@ -2,12 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 
 import { SiteShell } from "@/components/layout/site-shell";
+import { ThemeScript } from "@/components/layout/theme-script";
 import { languages, locales } from "@/content/i18n";
 import { cn } from "@/lib/cn";
 import { getContent } from "@/lib/content";
 import { fontMono, fontSans, fontSerif } from "@/lib/fonts";
 import { isLocale } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site-url";
+import { themeColors } from "@/lib/theme";
 
 import "../globals.css";
 
@@ -72,17 +74,31 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   };
 }
 
+// The browser's UI color per system theme, the default. The theme script puts
+// its own tag before these, set to the theme actually shown.
 export const viewport: Viewport = {
-  themeColor: "#08080a",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: themeColors.dark },
+    { media: "(prefers-color-scheme: light)", color: themeColors.light },
+  ],
+  colorScheme: "dark light",
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
+  // The theme script sets data-theme on <html> before React hydrates, hence
+  // suppressHydrationWarning (for <html>'s own attributes only).
   return (
-    <html lang={locale} className={cn(fontSans.variable, fontMono.variable, fontSerif.variable)}>
+    <html
+      lang={locale}
+      className={cn(fontSans.variable, fontMono.variable, fontSerif.variable)}
+      suppressHydrationWarning
+    >
+      <head>
+        <ThemeScript />
+      </head>
       <body>
         <noscript>
           {/* Without JavaScript, show content that would otherwise animate in. */}

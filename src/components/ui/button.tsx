@@ -12,9 +12,8 @@ const base =
   "active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-fg text-canvas shadow-[inset_0_-1px_0_rgb(0_0_0/0.18),0_1px_2px_rgb(0_0_0/0.4)] hover:bg-white",
-  secondary: "border border-line-strong bg-white/[0.02] text-fg hover:border-white/30 hover:bg-white/[0.05]",
+  primary: "bg-fg text-canvas shadow-button hover:bg-tint",
+  secondary: "border border-line-strong bg-tint/[0.02] text-fg hover:border-tint/30 hover:bg-tint/[0.05]",
   ghost: "text-fg-muted hover:text-fg",
 };
 

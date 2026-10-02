@@ -215,7 +215,7 @@ function AdditionalCard({
     "after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-2xl focus-visible:after:outline-2 focus-visible:after:outline-offset-[-2px] focus-visible:after:outline-accent";
 
   return (
-    <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-surface/50 p-6 transition-[border-color,background-color] duration-300 hover:border-line-strong hover:bg-surface sm:p-7">
+    <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-surface/50 p-6 shadow-card transition-[border-color,background-color] duration-300 hover:border-line-strong hover:bg-surface sm:p-7">
       <div className="flex items-start justify-between gap-4">
         <ProjectBadge kind={project.kind}>{project.badge}</ProjectBadge>
         {href ? (

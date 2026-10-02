@@ -120,7 +120,7 @@ function Wordmark({ name }: { name: string }) {
             letterSpacing="-12"
             textLength={width}
             lengthAdjust="spacingAndGlyphs"
-            className="fill-white/[0.04] font-sans font-medium"
+            className="fill-tint/[0.04] font-sans font-medium"
           >
             {name}
           </text>
