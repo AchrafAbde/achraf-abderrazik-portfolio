@@ -21,9 +21,9 @@ export function Stack({ stack }: { stack: Content["stack"] }) {
         {stack.groups.map((group, index) => (
           <RevealItem as="li" key={group.id} className="bg-canvas p-6 sm:p-8">
             <h3 className="flex items-center gap-3 font-mono text-eyebrow text-fg-subtle uppercase">
-              <span className="text-fg-muted tabular-nums">{String(index + 1).padStart(2, "0")}</span>
-              <span aria-hidden="true" className="h-px w-5 bg-line-strong" />
-              {group.label}
+              {/* Spaces keep "01 AI / ML" apart in the heading's text; flex doesn't render them. */}
+              <span className="text-fg-muted tabular-nums">{String(index + 1).padStart(2, "0")}</span>{" "}
+              <span aria-hidden="true" className="h-px w-5 bg-line-strong" /> {group.label}
             </h3>
             <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2.5">
               {group.items.map((item) => (

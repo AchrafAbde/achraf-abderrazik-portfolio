@@ -5,5 +5,14 @@
   # The site's public address, used for canonical URLs, hreflang, the sitemap,
   # robots.txt, share images and structured data (src/lib/site-url.ts).
   # Next.js reads it at build time: a change takes effect on the next deploy.
-  # It's the primary domain; achraf-abderrazik.netlify.app stays as an alias.
+  # It's the primary domain; the Netlify subdomain redirects to it (below).
   NEXT_PUBLIC_SITE_URL = "https://achraf-abderrazik.online"
+
+# One address per page: the Netlify subdomain keeps working but sends visitors
+# and search engines to the same path on the primary domain. Deploy previews
+# use other subdomains and are not affected. www is redirected by Netlify.
+[[redirects]]
+  from = "https://achraf-abderrazik.netlify.app/*"
+  to = "https://achraf-abderrazik.online/:splat"
+  status = 301
+  force = true

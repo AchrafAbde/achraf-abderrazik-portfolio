@@ -8,10 +8,11 @@ import type { SiteContent } from "./types";
 export const site: SiteContent = {
   name: "Achraf Abderrazik",
 
-  role: { en: "AI/ML Engineer", fr: "Ingénieur IA/ML" },
+  // The professional title: the homepage heading, titles and structured data.
+  role: { en: "AI & Data Science Engineer", fr: "Ingénieur IA & Data Science" },
 
   positioning: [
-    { en: "AI / ML Engineer", fr: "Ingénieur IA / ML" },
+    { en: "AI & Data Science Engineer", fr: "Ingénieur IA & Data Science" },
     { en: "AI Automation", fr: "Automatisation IA" },
     { en: "Backend & Intelligent Systems", fr: "Backend & systèmes intelligents" },
   ],
@@ -39,20 +40,20 @@ export const site: SiteContent = {
   // A tall photo is shown as a horizontal band: the second `position` value
   // moves your face up or down in the frame.
   portrait: {
-    src: "/achraf-portrait.png",
+    src: "/achraf-abderrazik.png",
     alt: { en: "Portrait of Achraf Abderrazik", fr: "Portrait d’Achraf Abderrazik" },
     position: "50% 45%",
   },
 
   seo: {
     title: {
-      en: "Achraf Abderrazik — AI/ML Engineer · AI Automation · Backend",
-      fr: "Achraf Abderrazik — Ingénieur IA/ML · Automatisation IA · Backend",
+      en: "Achraf Abderrazik — AI & Data Science Engineer | Portfolio",
+      fr: "Achraf Abderrazik — Ingénieur IA & Data Science | Portfolio",
     },
     // Search results and social cards: keep under ~160 characters.
     description: {
-      en: "AI/ML engineer building intelligent systems from model to production: LLM applications, NLP, AI automation, backend APIs and deployment. Based in Marrakech.",
-      fr: "Ingénieur IA/ML, je construis des systèmes intelligents du modèle à la production : applications LLM, NLP, automatisation IA et API backend. Basé à Marrakech.",
+      en: "Achraf Abderrazik, AI & Data Science Engineer in Marrakech, Morocco, and final-year engineering student at EMSI: machine learning, LLM and automation projects.",
+      fr: "Achraf Abderrazik, ingénieur IA & Data Science à Marrakech, au Maroc, et élève ingénieur à l’EMSI : projets de machine learning, LLM et automatisation.",
     },
     keywords: {
       en: [
@@ -104,8 +105,8 @@ export const site: SiteContent = {
 
   footer: {
     description: {
-      en: "AI/ML Engineer building intelligent systems from model to production: LLM applications, AI automation and backend APIs.",
-      fr: "Ingénieur IA/ML, je construis des systèmes intelligents du modèle à la production : applications LLM, automatisation IA et API backend.",
+      en: "AI & Data Science Engineer building intelligent systems from model to production: machine learning, LLM applications, AI automation and backend APIs.",
+      fr: "Ingénieur IA & Data Science, je construis des systèmes intelligents du modèle à la production : machine learning, applications LLM, automatisation IA et API backend.",
     },
   },
 };

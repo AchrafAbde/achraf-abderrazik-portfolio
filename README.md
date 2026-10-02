@@ -1,7 +1,7 @@
 # Achraf Abderrazik — Portfolio
 
-Portfolio of **Achraf Abderrazik — AI / ML Engineer · AI Automation · Backend &
-Intelligent Systems**. Dark, editorial and technical: a cinematic portrait hero,
+Portfolio of **Achraf Abderrazik — AI & Data Science Engineer** (AI automation,
+backend and intelligent systems). Dark, editorial and technical: a cinematic portrait hero,
 five case studies with animated architecture diagrams, and a contact flow. In
 English and French, at `/en` and `/fr`.
 
@@ -34,7 +34,7 @@ Requires Node.js 20.9 or newer.
 
 ## Before you launch
 
-1. **Portrait:** `public/achraf-portrait.png` is in place (941 × 1672). See
+1. **Portrait:** `public/achraf-abderrazik.png` is in place (941 × 1672). See
    below to change it.
 2. **Team projects:** AMAN, TrendRadar and Distributed Model Serving were team
    projects. Their "Team" section describes the team's work, without
@@ -50,9 +50,11 @@ Requires Node.js 20.9 or newer.
 
 ### Your portrait
 
-The photo is `public/achraf-portrait.png`, set by `portrait.src` in
+The photo is `public/achraf-abderrazik.png`, set by `portrait.src` in
 `src/content/site.ts`. To use another file, put it in `public/` and update
-`portrait.src` to match.
+`portrait.src` to match. Keep a descriptive file name (your name), since it
+appears in the image's address. The old `/achraf-portrait.png` address
+redirects to it (`next.config.ts`).
 
 - Portrait orientation, at least 1200 px tall.
 - A dark, low-key photo suits the design.
@@ -261,9 +263,10 @@ The site is hosted on **Netlify** and deploys from GitHub:
   repository. `.env.example` lists every variable, without values.
 
 **Domains** (Netlify → Domain management): `achraf-abderrazik.online` is the
-primary domain and the canonical address; `www.achraf-abderrazik.online`
-redirects to it, and `achraf-abderrazik.netlify.app` stays connected as
-Netlify's subdomain. HTTPS certificates are issued by Netlify. If the primary
+primary domain and the canonical address. `www.achraf-abderrazik.online` and
+Netlify's subdomain `achraf-abderrazik.netlify.app` both redirect to it with a
+301 (the latter set in `netlify.toml`), so every page has a single address.
+HTTPS certificates are issued by Netlify. If the primary
 domain ever changes, update `NEXT_PUBLIC_SITE_URL` in `netlify.toml` and push.
 
 **Local development** needs no configuration: without `NEXT_PUBLIC_SITE_URL`,

@@ -29,7 +29,6 @@ export const ui: UiContent = {
   },
 
   hero: {
-    positioning: { en: "Positioning", fr: "Positionnement" },
     portraitPlaceholder: {
       en: "Portrait placeholder. Add your photo at",
       fr: "Portrait en attente. Ajoutez votre photo dans",
@@ -99,6 +98,5 @@ export const ui: UiContent = {
   og: {
     caseStudy: { en: "Case study", fr: "Étude de cas" },
     caseStudyAlt: { en: "Case study by {name}", fr: "Étude de cas — {name}" },
-    homeFooter: { en: "AI/ML · AI automation · Backend", fr: "IA/ML · Automatisation IA · Backend" },
   },
 };

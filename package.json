@@ -1,7 +1,7 @@
 {
   "name": "achraf-abderrazik-portfolio",
   "version": "1.0.0",
-  "description": "Portfolio website for Achraf Abderrazik, AI/ML engineer: AI automation, backend and intelligent systems.",
+  "description": "Portfolio website for Achraf Abderrazik, AI & Data Science Engineer: machine learning, LLM applications, AI automation and backend systems.",
   "private": true,
   "scripts": {
     "dev": "next dev",

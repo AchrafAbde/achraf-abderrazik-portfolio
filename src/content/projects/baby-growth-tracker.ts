@@ -19,5 +19,5 @@ export const babyGrowthTracker: SecondaryProject = {
     { en: "Growth, vaccination & appointment tracking", fr: "Suivi de la croissance, des vaccins & des rendez-vous" },
   ],
   technologies: ["React Native", "Expo", "Laravel", "PHP", "MySQL"],
-  links: { github: "https://github.com/AchrafAbde/baby-growth-tracker" },
+  links: { github: "https://github.com/AchrafAbderrazik/baby-growth-tracker" },
 };

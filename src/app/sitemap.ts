@@ -5,15 +5,17 @@ import { getContent } from "@/lib/content";
 import { localizeHref } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site-url";
 
-/** Every page in every language, each listing its translations (hreflang). */
+/**
+ * Every page in every language, each listing its translations (hreflang).
+ * No <lastmod>: the only date available is the build time, which changes on
+ * every deploy, and Google ignores lastmod values that aren't accurate.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   const paths = ["/", ...getContent(defaultLocale).caseStudies.map((study) => `/work/${study.slug}`)];
 
   return paths.flatMap((path) =>
     locales.map((locale) => ({
       url: absoluteUrl(localizeHref(locale, path)),
-      lastModified,
       changeFrequency: path === "/" ? ("monthly" as const) : ("yearly" as const),
       priority: path === "/" ? 1 : 0.8,
       alternates: {

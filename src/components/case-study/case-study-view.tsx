@@ -376,9 +376,9 @@ function CaseSection({
                 id={id}
                 className="flex items-center gap-3 font-mono text-eyebrow text-fg-subtle uppercase"
               >
-                <span className="text-fg-muted tabular-nums">{index}</span>
-                <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
-                {title}
+                {/* Spaces keep "01 Context" apart in the heading's text; flex doesn't render them. */}
+                <span className="text-fg-muted tabular-nums">{index}</span>{" "}
+                <span aria-hidden="true" className="h-px w-8 bg-line-strong" /> {title}
               </h2>
             </Reveal>
             <div className={wide ? undefined : "lg:col-span-8"}>{children}</div>

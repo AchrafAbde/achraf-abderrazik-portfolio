@@ -41,6 +41,9 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/work/:slug", destination: "/en/work/:slug", permanent: true },
+
+      // The portrait's previous file name.
+      { source: "/achraf-portrait.png", destination: "/achraf-abderrazik.png", permanent: true },
     ];
   },
 };

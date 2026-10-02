@@ -19,5 +19,5 @@ export const carRentalSystem: SecondaryProject = {
     { en: "Administration dashboard", fr: "Tableau de bord d’administration" },
   ],
   technologies: ["C#", "ASP.NET Core MVC", "Entity Framework Core", "SQL Server", "Windows Forms"],
-  links: { github: "https://github.com/AchrafAbde/car-rental-system" },
+  links: { github: "https://github.com/AchrafAbderrazik/car-rental-system" },
 };

@@ -19,7 +19,7 @@ import { ArrowDownIcon, ArrowUpRightIcon } from "../ui/icons";
  *       while the photo settles into place
  *  250  the headline rises in, line by line
  *  800  the introduction, then the calls to action
- * 1150  technical metadata fades in: positioning, labels, registration marks
+ * 1150  technical metadata fades in: name and role, labels, registration marks
  * 1350  the stack readout boots up
  *
  * Only transform, opacity and clip-path animate. With "reduce motion"
@@ -46,39 +46,31 @@ export function Hero({ locale, site, hero, labels, photo }: HeroProps) {
       <HeroMotion className="flex flex-col pt-24 sm:pt-28 lg:min-h-[min(100svh,60rem)] lg:pt-28 lg:short:pt-24">
         <Container className="flex flex-1 flex-col">
           <div className="grid flex-1 grid-cols-1 lg:grid-cols-12 lg:items-center lg:gap-x-10">
-            <HeroIntro site={site} positioningLabel={labels.positioning} className="mb-8 lg:hidden" />
-
-            <div className="lg:col-start-8 lg:col-end-13 lg:row-start-1">
-              <PortraitFrame site={site} photo={photo} placeholderHint={labels.portraitPlaceholder} />
-            </div>
-
-            {/* Overlaps the bottom of the portrait on small screens, its left edge on large ones. */}
-            <div className="relative z-10 -mt-20 sm:-mt-28 lg:col-start-1 lg:col-end-9 lg:row-start-1 lg:mt-0 lg:py-6 lg:short:py-0">
+            {/* The text column, over the portrait's left edge on large screens. On small
+                screens its box dissolves (display: contents) so the page heading sits above
+                the portrait (`order`) and the tagline overlaps the portrait's bottom. */}
+            <div className="contents lg:relative lg:z-10 lg:col-start-1 lg:col-end-9 lg:row-start-1 lg:block lg:py-6 lg:short:py-0">
               {/* 7/8 of this column: it spans columns 1–8 and the portrait starts at
-                  column 8, so a long positioning line wraps before reaching the photo. */}
-              <HeroIntro
-                site={site}
-                positioningLabel={labels.positioning}
-                className="mb-9 hidden lg:flex lg:max-w-[87.5%] lg:short:mb-6"
-              />
+                  column 8, so a long heading wraps before reaching the photo. */}
+              <HeroIntro site={site} className="mb-8 lg:mb-9 lg:max-w-[87.5%] lg:short:mb-6" />
 
-              <h1 id="hero-title" className="text-hero font-medium text-fg">
+              <p className="relative z-10 order-2 -mt-20 text-hero font-medium text-balance text-fg sm:-mt-28 lg:order-none lg:mt-0">
                 {hero.headline.map((line, index) => (
                   <Line key={line} ms={timing.title + index * 90}>
                     <HeadlineText text={line} />
                   </Line>
                 ))}
-              </h1>
+              </p>
 
               <p
-                className="mt-8 max-w-[33rem] animate-fade-up text-lead text-fg-muted sm:mt-10 lg:short:mt-7"
+                className="order-2 mt-8 max-w-[33rem] animate-fade-up text-lead text-fg-muted sm:mt-10 lg:order-none lg:short:mt-7"
                 style={delay(timing.lead)}
               >
                 {hero.intro}
               </p>
 
               <div
-                className="mt-9 flex animate-fade-up flex-col gap-3 sm:mt-10 sm:flex-row lg:short:mt-7"
+                className="order-2 mt-9 flex animate-fade-up flex-col gap-3 sm:mt-10 sm:flex-row lg:order-none lg:short:mt-7"
                 style={delay(timing.cta)}
               >
                 <ButtonLink
@@ -97,6 +89,10 @@ export function Hero({ locale, site, hero, labels, photo }: HeroProps) {
                   {hero.secondaryCta.label}
                 </ButtonLink>
               </div>
+            </div>
+
+            <div className="order-1 lg:order-none lg:col-start-8 lg:col-end-13 lg:row-start-1">
+              <PortraitFrame site={site} photo={photo} placeholderHint={labels.portraitPlaceholder} />
             </div>
           </div>
 
@@ -151,15 +147,7 @@ function HeadlineText({ text }: { text: string }) {
   );
 }
 
-function HeroIntro({
-  site,
-  positioningLabel,
-  className,
-}: {
-  site: Content["site"];
-  positioningLabel: string;
-  className?: string;
-}) {
+function HeroIntro({ site, className }: { site: Content["site"]; className?: string }) {
   return (
     <div className={cn("flex flex-col items-start gap-5", className)}>
       {site.availability.open ? (
@@ -167,23 +155,20 @@ function HeroIntro({
           <StatusPill>{site.availability.label}</StatusPill>
         </div>
       ) : null}
-      {/* Separators sit in the gap before each item; one that would start a
-          new line falls outside the clipped box, so no line begins or ends with "·". */}
-      <div className="hero-meta overflow-hidden" style={delay(timing.meta + 80)}>
-        <ul
-          aria-label={positioningLabel}
-          className="-ml-6 flex flex-wrap gap-y-1.5 font-mono text-eyebrow text-fg-muted uppercase"
-        >
-          {site.positioning.map((item) => (
-            <li
-              key={item}
-              className="relative pl-6 whitespace-nowrap before:absolute before:left-0 before:w-6 before:text-center before:text-fg-subtle before:content-['·']"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* The page's main heading: who this is ("Achraf Abderrazik · AI & Data Science
+          Engineer"). The separator sits in the gap before the role; if the role wraps
+          to a new line, it falls outside the clipped box, so no line starts with "·". */}
+      <h1 id="hero-title" className="hero-meta overflow-hidden" style={delay(timing.meta + 80)}>
+        <span className="-ml-6 flex flex-wrap gap-y-1.5 font-mono text-eyebrow uppercase">
+          <span className="relative pl-6 whitespace-nowrap text-fg">{site.name}</span>{" "}
+          <span className="relative pl-6 whitespace-nowrap text-fg-muted">
+            <span aria-hidden="true" className="absolute left-0 w-6 text-center text-fg-subtle">
+              ·
+            </span>{" "}
+            {site.role}
+          </span>
+        </span>
+      </h1>
     </div>
   );
 }

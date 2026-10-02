@@ -25,9 +25,9 @@ export type SectionHeading = { index: string; eyebrow: Copy; title: Copy; intro?
 
 export type SiteContent = {
   name: string;
-  /** Short role, used in titles and compact places. */
+  /** Professional title: with the name, the homepage's main heading; also titles and structured data. */
   role: Copy;
-  /** Shown above the hero headline. */
+  /** Short descriptors for the app manifest and the share image's alt text. */
   positioning: Copy[];
   availability: { open: boolean; label: Copy };
   /** Shown on the page: "Marrakech, Morocco". */
@@ -295,7 +295,7 @@ export type UiContent = {
   header: { home: Copy; mainNav: Copy; openMenu: Copy; closeMenu: Copy; menu: Copy; mobileNav: Copy };
   language: { label: Copy };
   footer: { navigate: Copy; getInTouch: Copy; inquiry: Copy; rights: Copy; backToTop: Copy; nav: Copy };
-  hero: { positioning: Copy; portraitPlaceholder: Copy };
+  hero: { portraitPlaceholder: Copy };
   work: { readCaseStudy: Copy; pipeline: Copy; technologies: Copy; githubRepo: Copy };
   caseStudy: {
     allWork: Copy;
@@ -329,5 +329,5 @@ export type UiContent = {
     metaTitle: Copy;
   };
   notFound: { eyebrow: Copy; title: Copy; text: Copy; back: Copy; metaTitle: Copy };
-  og: { caseStudy: Copy; caseStudyAlt: Copy; homeFooter: Copy };
+  og: { caseStudy: Copy; caseStudyAlt: Copy };
 };

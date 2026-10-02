@@ -93,13 +93,17 @@ them: `*words*` becomes the Instrument Serif accent, `**words**` brighter
 Every component renders English and French from the same markup, so a
 design change applies to both. French text runs 15–30% longer, so:
 
-- Let text wrap; never truncate or shrink it to fit. Lists that wrap (the hero
-  positioning, pipelines) put separators in the gap so no line starts or ends
-  with one.
+- Let text wrap; never truncate or shrink it to fit. Lines that wrap (the hero
+  heading's name and role, pipelines) put separators in the gap so no line
+  starts or ends with one.
 - Check long strings at 1024px (the tightest large layout) and at 390px. In
-  the hero, the positioning line is limited to the columns left of the
+  the hero, the name-and-role heading is limited to the columns left of the
   portrait (`lg:max-w-[87.5%]`), so it wraps instead of running under the
   photo.
+
+The homepage's `h1` is the name and role ("Achraf Abderrazik · AI & Data
+Science Engineer"), in the small mono style above the tagline; the large
+tagline is a paragraph. Keep a single `h1` per page.
 - Numbers and units follow the language (`0,895`, `98 %`, `12 h`); French
   no-break spaces are added automatically.
 

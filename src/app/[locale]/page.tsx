@@ -8,6 +8,7 @@ import { Proof } from "@/components/sections/proof";
 import { Services } from "@/components/sections/services";
 import { Stack } from "@/components/sections/stack";
 import { Work } from "@/components/sections/work";
+import { ProfilePageJsonLd } from "@/components/seo/json-ld";
 import { defaultLocale } from "@/content/i18n";
 import { getContent, getGithubProfile } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
@@ -52,6 +53,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       />
       <Stack stack={content.stack} />
       <Contact locale={locale} contact={content.contact} site={content.site} />
+      <ProfilePageJsonLd content={content} />
     </PageTransition>
   );
 }

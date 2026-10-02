@@ -211,7 +211,7 @@ function parseLine(line: string): OgLine {
 
 /** Homepage share image, in the page's language. */
 export function renderHomeOgImage(content: Content) {
-  const { site, ui } = content;
+  const { site } = content;
   const lines = site.seo.shareHeadline.map(parseLine);
   return renderOgImage({
     name: site.name,
@@ -219,7 +219,7 @@ export function renderHomeOgImage(content: Content) {
     lines,
     // Three lines (the French headline) need a smaller size to fit.
     fontSize: lines.length > 2 ? 80 : 92,
-    footerLeft: ui.og.homeFooter,
+    footerLeft: site.role,
     footerRight: site.location,
   });
 }

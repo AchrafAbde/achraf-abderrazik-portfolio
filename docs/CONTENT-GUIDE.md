@@ -201,8 +201,8 @@ study", the sitemap, `hreflang`, the share images and the structured data.
 
 ### Portrait
 
-- File: `public/achraf-portrait.png` (currently 941 × 1672), set by
-  `portrait.src` in `src/content/site.ts`.
+- File: `public/achraf-abderrazik.png` (currently 941 × 1672), set by
+  `portrait.src` in `src/content/site.ts`. Keep a descriptive file name.
 - Portrait orientation, at least 1200 px tall; a dark, low-key photo suits
   the design. JPG, PNG or WebP.
 - `portrait.position` (a CSS `object-position`, now `"50% 45%"`) frames your
@@ -325,9 +325,9 @@ Keys never go in the repository: `.env*` files are git-ignored, except
 `.env.example`, which has no values.
 
 **Domains:** `achraf-abderrazik.online` is the primary domain (Netlify → Domain
-management); `www` redirects to it and `achraf-abderrazik.netlify.app` stays as
-an alias. If the primary domain ever changes, update `NEXT_PUBLIC_SITE_URL` in
-`netlify.toml` and push.
+management); `www` and `achraf-abderrazik.netlify.app` redirect to it (301). If
+the primary domain ever changes, update `NEXT_PUBLIC_SITE_URL` and the redirect
+in `netlify.toml`, and push.
 
 Without a webhook or Resend key, the form offers to send the inquiry from the
 visitor's email app instead.

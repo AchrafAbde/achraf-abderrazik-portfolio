@@ -245,7 +245,7 @@ export const aman: CaseStudyProject = {
     { en: "Multi-label classification", fr: "Classification multi-label" },
     "Transformers",
   ],
-  links: { github: "https://github.com/AchrafAbde/aman-toxic-speech-detection" },
+  links: { github: "https://github.com/AchrafAbderrazik/aman-toxic-speech-detection" },
 
   seo: {
     description: {

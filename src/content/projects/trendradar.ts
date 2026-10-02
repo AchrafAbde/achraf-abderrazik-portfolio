@@ -195,7 +195,7 @@ export const trendradar: CaseStudyProject = {
     "XGBoost",
     { en: "Social media", fr: "Réseaux sociaux" },
   ],
-  links: { github: "https://github.com/AchrafAbde/trendradar" },
+  links: { github: "https://github.com/AchrafAbderrazik/trendradar" },
 
   seo: {
     description: {

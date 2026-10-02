@@ -19,5 +19,5 @@ export const industrialSurveillance: SecondaryProject = {
     { en: "Role-based user access", fr: "Accès utilisateurs par rôles" },
   ],
   technologies: ["React", "Material UI", "Socket.IO", "Flask", "Flask-SocketIO", "SQLAlchemy", "JWT"],
-  links: { github: "https://github.com/AchrafAbde/surveillance-industrielle" },
+  links: { github: "https://github.com/AchrafAbderrazik/surveillance-industrielle" },
 };

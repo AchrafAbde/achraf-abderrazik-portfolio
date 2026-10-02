@@ -22,23 +22,23 @@ const caseStudyName = (content: Content, study: CaseStudy) =>
   fill(content.ui.caseStudy.metaTitle, { title: study.title, subtitle: study.subtitle });
 
 /**
- * Site-wide structured data: the website, the profile page and the person.
- * Only facts from the content files: no ratings, reviews or invented claims.
+ * The person the site represents. Only facts from the content files, all shown
+ * on the site: no ratings, reviews or invented claims.
  */
-export function JsonLd({ content }: { content: Content }) {
-  const { locale, site, about, services, stack } = content;
-  const url = absoluteUrl(localizeHref(locale, "/"));
+function person(content: Content) {
+  const { site, about, services, stack } = content;
   const email = site.contact.email.trim();
+  // Profiles that belong to this person only (site.ts → socials).
   const sameAs = site.socials.map((social) => social.href).filter(Boolean);
-  const title = `${site.name} — ${site.positioning.join(" · ")}`;
 
-  const person = {
+  return {
     "@type": "Person",
     "@id": personId(),
     name: site.name,
     jobTitle: site.role,
     description: site.seo.description,
-    url,
+    // The site's root: the same address in every language.
+    url: absoluteUrl("/"),
     ...(hasPortrait() ? { image: absoluteUrl(site.portrait.src) } : {}),
     ...(email ? { email: `mailto:${email}` } : {}),
     ...(sameAs.length > 0 ? { sameAs } : {}),
@@ -66,44 +66,65 @@ export function JsonLd({ content }: { content: Content }) {
       },
     })),
   };
+}
 
-  const data = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": websiteId(),
-        url: absoluteUrl("/"),
-        name: site.name,
-        alternateName: title,
-        description: site.seo.description,
-        inLanguage: ["en", "fr"],
-        publisher: { "@id": personId() },
-      },
-      {
+/** On every page: the website and the person behind it. */
+export function JsonLd({ content }: { content: Content }) {
+  const { site } = content;
+
+  return (
+    <StructuredData
+      data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": websiteId(),
+            url: absoluteUrl("/"),
+            name: site.name,
+            description: site.seo.description,
+            inLanguage: ["en", "fr"],
+            publisher: { "@id": personId() },
+          },
+          person(content),
+        ],
+      }}
+    />
+  );
+}
+
+/**
+ * Homepage only. It is the profile page of the person the whole site is about
+ * (Google's ProfilePage: a page focused on one person affiliated with the site).
+ */
+export function ProfilePageJsonLd({ content }: { content: Content }) {
+  const { locale, site } = content;
+  const url = absoluteUrl(localizeHref(locale, "/"));
+
+  return (
+    <StructuredData
+      data={{
+        "@context": "https://schema.org",
         "@type": "ProfilePage",
         "@id": `${url}#profile`,
         url,
-        name: title,
+        name: site.seo.title,
         inLanguage: locale,
         isPartOf: { "@id": websiteId() },
-        mainEntity: { "@id": personId() },
+        mainEntity: person(content),
         hasPart: content.caseStudies.map((study) => ({
           "@type": "CreativeWork",
           name: caseStudyName(content, study),
           url: absoluteUrl(localizeHref(locale, `/work/${study.slug}`)),
         })),
-      },
-      person,
-    ],
-  };
-
-  return <StructuredData data={data} />;
+      }}
+    />
+  );
 }
 
 export function CaseStudyJsonLd({ content, study }: { content: Content; study: CaseStudy }) {
   const url = absoluteUrl(localizeHref(content.locale, `/work/${study.slug}`));
-  const links = [study.links?.github, study.links?.demo].filter((href): href is string => Boolean(href));
+  const repository = study.links?.github;
 
   return (
     <StructuredData
@@ -123,10 +144,12 @@ export function CaseStudyJsonLd({ content, study }: { content: Content; study: C
         ...(study.contribution
           ? { author: { "@id": personId() }, creator: { "@id": personId() } }
           : { contributor: { "@id": personId() } }),
-        ...(study.team ? { comment: study.team } : {}),
         keywords: [...study.technologies, ...(study.tags ?? [])].join(", "),
         isPartOf: { "@id": websiteId() },
-        ...(links.length > 0 ? { sameAs: links } : {}),
+        // The public source code the case study is about, when there is one.
+        ...(repository
+          ? { about: { "@type": "SoftwareSourceCode", name: study.title, codeRepository: repository } }
+          : {}),
       }}
     />
   );
