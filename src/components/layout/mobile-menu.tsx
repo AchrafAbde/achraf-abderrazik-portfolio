@@ -10,7 +10,7 @@ import { ButtonLink } from "../ui/button";
 import { Container } from "../ui/container";
 import { ArrowUpRightIcon, CloseIcon } from "../ui/icons";
 import { LanguageSwitch } from "./language-switch";
-import { LogoMark } from "./logo";
+import { LogoLockup } from "./logo";
 import type { SiteHeaderProps } from "./site-header";
 import { ThemePicker } from "./theme-switch";
 
@@ -104,10 +104,9 @@ export function MobileMenu({
         <Link
           href={homeHref}
           onClick={closeAfterNavigation}
-          className="-ml-1 flex items-center gap-3 rounded-lg p-1 text-fg"
+          className="-ml-1 flex items-center rounded-lg p-1 text-fg"
         >
-          <LogoMark />
-          <span className="text-[0.9375rem] font-medium tracking-[-0.01em]">{name}</span>
+          <LogoLockup name={name} nameClassName="text-[0.9375rem]" />
         </Link>
         <div className="flex items-center gap-2">
           <LanguageSwitch locale={locale} label={labels.language} hash={languageHash} />

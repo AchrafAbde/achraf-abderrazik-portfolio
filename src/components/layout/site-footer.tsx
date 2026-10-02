@@ -6,7 +6,7 @@ import { measureGeistMedium } from "@/lib/text-metrics";
 import { Container } from "../ui/container";
 import { ArrowUpIcon } from "../ui/icons";
 import type { HeaderLink } from "./site-header";
-import { LogoMark } from "./logo";
+import { LogoLockup } from "./logo";
 
 type SiteFooterProps = {
   name: string;
@@ -28,10 +28,7 @@ export function SiteFooter({ name, description, nav, inquiryHref, topHref, email
     <footer className="relative overflow-hidden border-t border-line">
       <Container className="grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
-          <div className="flex items-center gap-3">
-            <LogoMark />
-            <span className="font-medium tracking-[-0.01em]">{name}</span>
-          </div>
+          <LogoLockup name={name} />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-fg-muted">{description}</p>
         </div>
 

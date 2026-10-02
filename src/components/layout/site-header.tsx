@@ -13,7 +13,7 @@ import { ButtonLink } from "../ui/button";
 import { Container } from "../ui/container";
 import { ArrowUpRightIcon, MenuIcon } from "../ui/icons";
 import { LanguageSwitch } from "./language-switch";
-import { LogoMark } from "./logo";
+import { LogoLockup } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { ThemeSwitch, type ThemeLabels } from "./theme-switch";
 
@@ -113,11 +113,15 @@ export function SiteHeader(props: SiteHeaderProps) {
         <Container className="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
           <Link
             href={homeHref}
-            className="group -ml-1 flex items-center gap-3 rounded-lg p-1 text-fg"
+            className="group -ml-1 flex items-center rounded-lg p-1 text-fg"
             aria-label={labels.home}
           >
-            <LogoMark className="transition-colors duration-300 group-hover:border-tint/25" />
-            <span className="text-[0.9375rem] font-medium tracking-[-0.01em]">{name}</span>
+            <LogoLockup
+              name={name}
+              animated
+              markClassName="transition-colors duration-300 group-hover:border-tint/25"
+              nameClassName="text-[0.9375rem]"
+            />
           </Link>
 
           {/* Inline from 1024px: below that, it lives in the menu (with room for the language switch). */}

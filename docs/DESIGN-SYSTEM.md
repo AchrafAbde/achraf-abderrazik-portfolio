@@ -210,6 +210,77 @@ face. The treatment is CSS, applied in layers above the photo:
   (`data-theme="dark"`), like a print on the page. On phones its bottom fades
   into the page's canvas, so the overlapping headline reads in either theme.
 
+## Logo
+
+A personal mark, built from the name rather than from AI clichés: no brains,
+circuits or hexagons.
+
+### Meaning
+
+| Part              | Stands for                                                         |
+| ----------------- | ------------------------------------------------------------------ |
+| The A (ink)       | **Achraf**: the structure, the engineering                         |
+| The flow (lime)   | **Abderrazik**: a second, softer A on the same two feet, continuous with the first |
+| The flow's motion | Data moving through a system, intelligence, learning: it leaves one foot, rises, passes under the structure and lands on the other |
+| The dot (lime)    | The next data point: an idea, progress, the future                 |
+
+Together: Achraf Abderrazik → AI & data → continuous flow → intelligent
+systems → progress. The flow is woven through the A (under the left foot,
+under the right leg), so the three parts read as one symbol, a signature
+rather than an icon set.
+
+### Construction
+
+On a 64-unit grid (`src/lib/logo.ts`):
+
+- **The A:** feet at 12,52 and 52,52, apex at 32,12; one stroke of 6.75
+  with a round apex and feet.
+- **The flow:** the same stroke. It leaves the left foot at 12° (hidden
+  under it), arches inside the A at crossbar height, joins the right leg at
+  its golden section (0.618 of the leg from the apex) along the leg's own
+  direction, and becomes the leg's lower part. The ink stops flat where the
+  flow takes over.
+- **The dot:** 1.3× the stroke across, one stroke-width clear of the right
+  leg, on the line through the apex at 45° to the leg. Its outer edge stops
+  within half a unit of the right foot's, so the mark stays one compact block.
+- **Small version** (`logoSmall`, under 20px and in favicons): the same
+  construction with a 9-unit stroke and a larger dot, so nothing closes up
+  at 16px.
+
+### Color
+
+- The A takes the text color: `#f4f4f1` on dark, `#161614` on light.
+- The flow and the dot are the brand lime `#c6f36b` in both themes (not the
+  light theme's deeper text accent).
+- One-color versions (white or ink) keep a 1.5-unit gap where the flow
+  passes under the A, so the weave still shows.
+
+### Variants and where they're used
+
+| Variant                        | Where                                                              |
+| ------------------------------ | ------------------------------------------------------------------ |
+| `LogoIcon` (color, theme-aware) | Inside `LogoMark`; `variant="mono"` for one-color uses            |
+| `LogoMark` (the 32px tile)     | Header (animated), mobile menu and footer, through `LogoLockup`    |
+| `LogoLockup` (mark + name)     | Header, mobile menu, footer; optional role line (`subtitle`)       |
+| `src/app/icon.svg`, `favicon.ico` | Browser tab: the small version on a dark tile, readable on light and dark tab bars |
+| `src/app/apple-icon.png`, manifest | Home screen: the mark on the dark surface, 180px, opaque      |
+| Share images (`lib/og.tsx`)    | The mark in the header tile of every share image                   |
+| `docs/brand/`                  | Files for use outside the site: `logo.svg` (on dark), `logo-light.svg`, `logo-mono-white.svg`, `logo-mono-dark.svg`, `logo-small*.svg`, `logo-lockup*.svg` (live text in Geist), `app-icon.svg` and `app-icon-1024.png` (profile pictures) |
+
+`npm run brand` regenerates every icon and file in `docs/brand/` from
+`src/lib/logo.ts`; the components read the same geometry.
+
+### Rules
+
+- Smallest size 16px (the small version below 20px). Keep one dot-width of
+  clear space around the mark.
+- Don't recolor the lime, outline, stretch, rotate or add effects; the only
+  color change is a one-color version.
+- In the header it sits in its tile beside the name, never larger than it.
+- **Motion** (header only): the flow draws in once on load and the dot
+  arrives; on hover the dot steps 2.5 units up and to the right. Static
+  with reduced motion; the mark is complete without it.
+
 ## Components
 
 | Component                    | File                         | Notes                                              |
@@ -222,7 +293,7 @@ face. The treatment is CSS, applied in layers above the photo:
 | `Tag`                        | `ui/badge.tsx`               | Technology / keyword chip                          |
 | `StatusPill`                 | `ui/badge.tsx`               | Availability with a soft pulsing dot               |
 | Icons                        | `ui/icons.tsx`               | 24px grid, 1.6 stroke, `currentColor`, `aria-hidden` |
-| `LogoMark`                   | `layout/logo.tsx`            | Two connected nodes — trigger and result           |
+| `LogoIcon`, `LogoMark`, `LogoLockup` | `layout/logo.tsx`    | The logo: the symbol alone, in its tile, and beside the name (see "Logo") |
 | `Reveal`, `RevealGroup`, `RevealItem` | `motion/reveal.tsx` | Scroll-triggered entrances                          |
 | `ArchitectureDiagram`        | `diagrams/architecture-diagram.tsx` | Data-driven stages; horizontal ≥1280px, vertical below |
 | `CompactPipeline`            | `diagrams/compact-pipeline.tsx` | One-line pipeline for project rows; lights up on hover; connectors never start or end a line |

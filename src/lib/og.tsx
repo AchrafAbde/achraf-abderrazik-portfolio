@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 import type { CaseStudy, Content } from "./content";
+import { logo } from "./logo";
 
 export const ogSize = { width: 1200, height: 630 };
 
@@ -106,10 +107,18 @@ export async function renderOgImage({
                 justifyContent: "center",
               }}
             >
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-                <circle cx="6.25" cy="12" r="3.1" stroke={colors.fg} strokeWidth="1.9" />
-                <path d="M9.6 12h4.6" stroke={colors.fg} strokeWidth="1.9" strokeLinecap="round" />
-                <circle cx="17.75" cy="12" r="3.4" fill={colors.accent} />
+              {/* The logo (lib/logo.ts), as in the site's header. */}
+              <svg width="38" height="38" viewBox="0 0 64 64" fill="none">
+                <path
+                  d={logo.flow}
+                  stroke={colors.accent}
+                  strokeWidth={logo.stroke}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path d={logo.a} stroke={colors.fg} strokeWidth={logo.stroke} strokeLinejoin="round" />
+                <circle cx={logo.foot[0]} cy={logo.foot[1]} r={logo.stroke / 2} fill={colors.fg} />
+                <circle cx={logo.dot[0]} cy={logo.dot[1]} r={logo.dotRadius} fill={colors.accent} />
               </svg>
             </div>
             <div style={{ fontSize: 30, fontWeight: 500, letterSpacing: "-0.5px" }}>{name}</div>
